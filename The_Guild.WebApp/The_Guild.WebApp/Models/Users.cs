@@ -22,22 +22,22 @@ namespace The_Guild.WebApp.Models
         public decimal? Salary { get; set; }
 
         
-        [Range(0, 900000)]
+        [Range(0, 40)]
         public int? Strength { get; set; }
                 
-        [Range(0, 900000)]
+        [Range(0, 40)]
         public int? Dex { get; set; }
                 
-        [Range(0, 900000)]
+        [Range(0, 40)]
         public int? Wisdom { get; set; }
                 
-        [Range(0, 900000)]
+        [Range(0, 40)]
         public int? Intelligence { get; set; }
                 
-        [Range(0, 900000)]
+        [Range(0, 40)]
         public int? Charisma { get; set; }
                 
-        [Range(0, 900000)]
+        [Range(0, 40)]
         public int? Constitution { get; set; }
              
         [Range(0, 900000)]
