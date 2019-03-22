@@ -56,17 +56,35 @@ namespace The_Guild.WebApp.Controllers
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(ApiUsers users)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (!ModelState.IsValid)
+                {
+                    return View(users);
+                }
+
+                var request = CreateRequestToService(HttpMethod.Post, "/api/users/create",
+                    users);
+
+                var response = await HttpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                    return View("Error");
+                }
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                // log it
+                return View(users);
             }
         }
 
@@ -79,17 +97,34 @@ namespace The_Guild.WebApp.Controllers
         // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, ApiUsers users)
         {
             try
             {
-                // TODO: Add update logic here
+                if (!ModelState.IsValid)
+                {
+                    return View(users);
+                }
+                var request = CreateRequestToService(HttpMethod.Post, "/api/users/edit",
+                    users);
+
+                var response = await HttpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                    return View("Error");
+                }
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                // log it
+                return View(users);
             }
         }
 
@@ -102,17 +137,34 @@ namespace The_Guild.WebApp.Controllers
         // POST: Users/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, ApiUsers users)
         {
             try
             {
-                // TODO: Add delete logic here
+                if (!ModelState.IsValid)
+                {
+                    return View(users);
+                }
+                var request = CreateRequestToService(HttpMethod.Post, "/api/users/delete",
+                    users);
+
+                var response = await HttpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                    return View("Error");
+                }
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                // log it
+                return View(users);
             }
         }
     }
