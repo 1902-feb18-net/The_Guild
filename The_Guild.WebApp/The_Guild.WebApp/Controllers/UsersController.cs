@@ -21,7 +21,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Users
         public async Task<ActionResult> Index()
         {
-            var request = CreateRequestToService(HttpMethod.Get, "/api/character");
+            var request = CreateRequestToService(HttpMethod.Get, "/api/users");
 
             var response = await HttpClient.SendAsync(request);
 
