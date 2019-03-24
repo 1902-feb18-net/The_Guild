@@ -42,9 +42,24 @@ namespace The_Guild.WebApp.Controllers
         }
 
         // GET: Request/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var request = CreateRequestToService(HttpMethod.Get, $"/api/request/{id}");
+
+            var response = await HttpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                return View("Error");
+            }
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+            ApiRequest apiRequest = JsonConvert.DeserializeObject<ApiRequest>(jsonString);
+            return View(apiRequest);
         }
 
         // GET: Request/Create
@@ -65,7 +80,7 @@ namespace The_Guild.WebApp.Controllers
                     return View(apiRequest);
                 }
 
-                var request = CreateRequestToService(HttpMethod.Post, "/api/request/create", apiRequest);
+                var request = CreateRequestToService(HttpMethod.Post, "/api/request", apiRequest);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -104,7 +119,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return View(apiRequest);
                 }
-                var request = CreateRequestToService(HttpMethod.Post, "/api/request/edit", apiRequest);
+                var request = CreateRequestToService(HttpMethod.Put, $"/api/request/{id}", apiRequest);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -127,9 +142,15 @@ namespace The_Guild.WebApp.Controllers
         }
 
         // GET: Request/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            //if (!(Account?.Roles?.Contains("admin") ?? false))
+            //{
+            //    // access denied
+            //    return View("Error", new ErrorViewModel());
+            //}
+            // implementation of GET Details identical
+            return await Details(id);
         }
 
         // POST: Request/Delete/5
@@ -143,7 +164,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return View(apiRequest);
                 }
-                var request = CreateRequestToService(HttpMethod.Post, "/api/request/delete", apiRequest);
+                var request = CreateRequestToService(HttpMethod.Delete, $"/api/request/{id}", apiRequest);
 
                 var response = await HttpClient.SendAsync(request);
 
