@@ -12,16 +12,16 @@ using The_Guild.WebApp.ApiModels;
 
 namespace The_Guild.WebApp.Controllers
 {
-    public class UsersController : AServiceController
+    public class RanksController : AServiceController
     {
-        public UsersController(HttpClient httpClient, IConfiguration configuration)
+        public RanksController(HttpClient httpClient, IConfiguration configuration)
             : base(httpClient, configuration)
         { }
 
-        // GET: Users
+        // GET: Rank
         public async Task<ActionResult> Index()
         {
-            var request = CreateRequestToService(HttpMethod.Get, "/api/users");
+            var request = CreateRequestToService(HttpMethod.Get, "/api/ranks");
 
             var response = await HttpClient.SendAsync(request);
 
@@ -36,15 +36,15 @@ namespace The_Guild.WebApp.Controllers
 
             var jsonString = await response.Content.ReadAsStringAsync();
 
-            var characters = JsonConvert.DeserializeObject<List<ApiUsers>>(jsonString);
+            var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
 
-            return View(characters);
+            return View(ranks);
         }
 
-        // GET: Users/Details/5
+        // GET: Rank/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var request = CreateRequestToService(HttpMethod.Get, $"/api/users/{id}");
+            var request = CreateRequestToService(HttpMethod.Get, $"/api/ranks/{id}");
 
             var response = await HttpClient.SendAsync(request);
 
@@ -58,29 +58,29 @@ namespace The_Guild.WebApp.Controllers
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
-            ApiUsers user = JsonConvert.DeserializeObject<ApiUsers>(jsonString);
-            return View(user);
+            ApiRanks rank = JsonConvert.DeserializeObject<ApiRanks>(jsonString);
+            return View(rank);
         }
 
-        // GET: Users/Create
+        // GET: Rank/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Rank/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ApiUsers users)
+        public async Task<ActionResult> Create(ApiRanks rank)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(users);
+                    return View(rank);
                 }
 
-                var request = CreateRequestToService(HttpMethod.Post, "/api/users", users);
+                var request = CreateRequestToService(HttpMethod.Post, "/api/ranks", rank);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -98,28 +98,28 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
-                return View(users);
+                return View(rank);
             }
         }
 
-        // GET: Users/Edit/5
+        // GET: Rank/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Users/Edit/5
+        // POST: Rank/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, ApiUsers users)
+        public async Task<ActionResult> Edit(int id, ApiRanks rank)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(users);
+                    return View(rank);
                 }
-                var request = CreateRequestToService(HttpMethod.Put, $"/api/users/{id}", users);
+                var request = CreateRequestToService(HttpMethod.Put, $"/api/ranks/{id}", rank);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -137,28 +137,28 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
-                return View(users);
+                return View(rank);
             }
         }
 
-        // GET: Users/Delete/5
+        // GET: Rank/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Users/Delete/5
+        // POST: Rank/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, ApiUsers users)
+        public async Task<ActionResult> Delete(int id, ApiRanks rank)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(users);
+                    return View(rank);
                 }
-                var request = CreateRequestToService(HttpMethod.Delete, $"/api/users/{id}", users);
+                var request = CreateRequestToService(HttpMethod.Delete, $"/api/ranks/{id}", rank);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -176,7 +176,7 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
-                return View(users);
+                return View(rank);
             }
         }
     }
