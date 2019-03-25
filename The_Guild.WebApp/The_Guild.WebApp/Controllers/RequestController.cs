@@ -12,16 +12,16 @@ using The_Guild.WebApp.ApiModels;
 
 namespace The_Guild.WebApp.Controllers
 {
-    public class UsersController : AServiceController
+    public class RequestController : AServiceController
     {
-        public UsersController(HttpClient httpClient, IConfiguration configuration)
+        public RequestController(HttpClient httpClient, IConfiguration configuration)
             : base(httpClient, configuration)
         { }
 
-        // GET: Users
+        // GET: Request
         public async Task<ActionResult> Index()
         {
-            var request = CreateRequestToService(HttpMethod.Get, "/api/users");
+            var request = CreateRequestToService(HttpMethod.Get, "/api/request");
 
             var response = await HttpClient.SendAsync(request);
 
@@ -36,15 +36,15 @@ namespace The_Guild.WebApp.Controllers
 
             var jsonString = await response.Content.ReadAsStringAsync();
 
-            var characters = JsonConvert.DeserializeObject<List<ApiUsers>>(jsonString);
+            var requests = JsonConvert.DeserializeObject<List<ApiRequest>>(jsonString);
 
-            return View(characters);
+            return View(requests);
         }
 
-        // GET: Users/Details/5
+        // GET: Request/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var request = CreateRequestToService(HttpMethod.Get, $"/api/users/{id}");
+            var request = CreateRequestToService(HttpMethod.Get, $"/api/request/{id}");
 
             var response = await HttpClient.SendAsync(request);
 
@@ -58,29 +58,29 @@ namespace The_Guild.WebApp.Controllers
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
-            ApiUsers user = JsonConvert.DeserializeObject<ApiUsers>(jsonString);
-            return View(user);
+            ApiRequest apiRequest = JsonConvert.DeserializeObject<ApiRequest>(jsonString);
+            return View(apiRequest);
         }
 
-        // GET: Users/Create
+        // GET: Request/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Request/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ApiUsers users)
+        public async Task<ActionResult> Create(ApiRequest apiRequest)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(users);
+                    return View(apiRequest);
                 }
 
-                var request = CreateRequestToService(HttpMethod.Post, "/api/users", users);
+                var request = CreateRequestToService(HttpMethod.Post, "/api/request", apiRequest);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -98,28 +98,28 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
-                return View(users);
+                return View(apiRequest);
             }
         }
 
-        // GET: Users/Edit/5
+        // GET: Request/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Users/Edit/5
+        // POST: Request/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, ApiUsers users)
+        public async Task<ActionResult> Edit(int id, ApiRequest apiRequest)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(users);
+                    return View(apiRequest);
                 }
-                var request = CreateRequestToService(HttpMethod.Put, $"/api/users/{id}", users);
+                var request = CreateRequestToService(HttpMethod.Put, $"/api/request/{id}", apiRequest);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -137,28 +137,34 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
-                return View(users);
+                return View(apiRequest);
             }
         }
 
-        // GET: Users/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Request/Delete/5
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            //if (!(Account?.Roles?.Contains("admin") ?? false))
+            //{
+            //    // access denied
+            //    return View("Error", new ErrorViewModel());
+            //}
+            // implementation of GET Details identical
+            return await Details(id);
         }
 
-        // POST: Users/Delete/5
+        // POST: Request/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, ApiUsers users)
+        public async Task<ActionResult> Delete(int id, ApiRequest apiRequest)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(users);
+                    return View(apiRequest);
                 }
-                var request = CreateRequestToService(HttpMethod.Delete, $"/api/users/{id}", users);
+                var request = CreateRequestToService(HttpMethod.Delete, $"/api/request/{id}", apiRequest);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -176,7 +182,7 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
-                return View(users);
+                return View(apiRequest);
             }
         }
     }
