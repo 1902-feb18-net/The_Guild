@@ -1,0 +1,26 @@
+main {
+    align-content: center;
+}
+
+.test{
+    font-style: oblique;
+}
+
+.home{
+    opacity: .5;
+}
+
+html {
+    background-image: url(old-city-fantasy.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.footer{
+    opacity: 1;
+}
+
+.navbar{
+    opacity: 1;
+}

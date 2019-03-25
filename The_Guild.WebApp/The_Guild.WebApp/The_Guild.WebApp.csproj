@@ -13,4 +13,14 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Styles\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\Styles\Welcome.css" />
+  </ItemGroup>
+
 </Project>
