@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using The_Guild.WebApp.ApiModels;
+using The_Guild.WebApp.Models;
 
 namespace The_Guild.WebApp.Controllers
 {
@@ -36,7 +36,7 @@ namespace The_Guild.WebApp.Controllers
 
             var jsonString = await response.Content.ReadAsStringAsync();
 
-            var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
+            var ranks = JsonConvert.DeserializeObject<List<Ranks>>(jsonString);
 
             return View(ranks);
         }
@@ -58,7 +58,7 @@ namespace The_Guild.WebApp.Controllers
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
-            ApiRanks rank = JsonConvert.DeserializeObject<ApiRanks>(jsonString);
+            Ranks rank = JsonConvert.DeserializeObject<Ranks>(jsonString);
             return View(rank);
         }
 
@@ -71,7 +71,7 @@ namespace The_Guild.WebApp.Controllers
         // POST: Rank/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ApiRanks rank)
+        public async Task<ActionResult> Create(Ranks rank)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace The_Guild.WebApp.Controllers
         // POST: Rank/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, ApiRanks rank)
+        public async Task<ActionResult> Edit(int id, Ranks rank)
         {
             try
             {
@@ -150,7 +150,7 @@ namespace The_Guild.WebApp.Controllers
         // POST: Rank/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, ApiRanks rank)
+        public async Task<ActionResult> Delete(int id, Ranks rank)
         {
             try
             {
