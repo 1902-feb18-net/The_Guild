@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using The_Guild.WebApp.ApiModels;
+using The_Guild.WebApp.Models;
 
 namespace The_Guild.WebApp.Controllers
 {
@@ -21,7 +21,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Users
         public async Task<ActionResult> Index()
         {
-            var request = CreateRequestToService(HttpMethod.Get, "/api/users");
+            var request = CreateRequestToService(HttpMethod.Get, "api/users");
 
             var response = await HttpClient.SendAsync(request);
 
@@ -36,7 +36,7 @@ namespace The_Guild.WebApp.Controllers
 
             var jsonString = await response.Content.ReadAsStringAsync();
 
-            var characters = JsonConvert.DeserializeObject<List<ApiUsers>>(jsonString);
+            var characters = JsonConvert.DeserializeObject<List<Users>>(jsonString);
 
             return View(characters);
         }
@@ -58,7 +58,7 @@ namespace The_Guild.WebApp.Controllers
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
-            ApiUsers user = JsonConvert.DeserializeObject<ApiUsers>(jsonString);
+            Users user = JsonConvert.DeserializeObject<Users>(jsonString);
             return View(user);
         }
 
@@ -71,7 +71,7 @@ namespace The_Guild.WebApp.Controllers
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ApiUsers users)
+        public async Task<ActionResult> Create(Users users)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace The_Guild.WebApp.Controllers
                     return View(users);
                 }
 
-                var request = CreateRequestToService(HttpMethod.Post, "/api/users", users);
+                var request = CreateRequestToService(HttpMethod.Post, "/api/users/create", users);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -111,7 +111,7 @@ namespace The_Guild.WebApp.Controllers
         // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, ApiUsers users)
+        public async Task<ActionResult> Edit(int id, Users users)
         {
             try
             {
@@ -150,7 +150,7 @@ namespace The_Guild.WebApp.Controllers
         // POST: Users/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, ApiUsers users)
+        public async Task<ActionResult> Delete(int id, Users users)
         {
             try
             {
