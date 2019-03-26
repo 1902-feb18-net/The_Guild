@@ -14,13 +14,14 @@ namespace The_Guild.WebApp.Controllers
     public abstract class AServiceController : Controller
     {
         public HttpClient HttpClient { get; }
+        public IConfiguration Configuration { get; }
         public Uri ServiceUrl { get; }
         public string ServiceCookieName { get; }
 
         public AServiceController(HttpClient httpClient, IConfiguration configuration)
         {
             HttpClient = httpClient;
-
+            Configuration = configuration;
             ServiceUrl = new Uri(configuration["ServiceUrl"]);
             ServiceCookieName = configuration["ServiceCookieName"];
         }

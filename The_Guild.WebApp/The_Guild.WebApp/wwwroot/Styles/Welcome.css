@@ -2,13 +2,7 @@ main {
     align-content: center;
 }
 
-.test{
-    font-style: oblique;
-}
 
-.home{
-    opacity: .5;
-}
 
 html {
     background-image: url(old-city-fantasy.jpg);
@@ -17,10 +11,3 @@ html {
     background-position: center;
 }
 
-.footer{
-    opacity: 1;
-}
-
-.navbar{
-    opacity: 1;
-}
