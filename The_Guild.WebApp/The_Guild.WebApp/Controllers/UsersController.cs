@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using The_Guild.WebApp.ApiModels;
+using The_Guild.WebApp.ViewModel;
 using The_Guild.WebApp.Models;
 
 namespace The_Guild.WebApp.Controllers
@@ -25,20 +27,44 @@ namespace The_Guild.WebApp.Controllers
 
             var response = await HttpClient.SendAsync(request);
 
+            //var request2 = CreateRequestToService(HttpMethod.Get, "/api/ranks");
+            //var response2 = await HttpClient.SendAsync(request);
+
+            // Change the redirects to actual places not home
+
             if (!response.IsSuccessStatusCode)
             {
                 if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("Index", "Home");
                 }
                 return View("Error");
             }
+            //if (!response2.IsSuccessStatusCode)
+            //{
+            //    if (response.StatusCode == HttpStatusCode.Unauthorized)
+            //    {
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //    return View("Error");
+            //}
 
             var jsonString = await response.Content.ReadAsStringAsync();
+            var users = JsonConvert.DeserializeObject<List<Users>>(jsonString);
 
-            var characters = JsonConvert.DeserializeObject<List<Users>>(jsonString);
+            //var jsonString2 = await response.Content.ReadAsStringAsync();
+            //var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString2);
 
-            return View(characters);
+            var viewModels = users.Select(u => new UserIndexModel
+            {
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                RankId = u.RankId,
+                //Ranks = ranks
+            }).ToList();
+
+            
+            return View(viewModels);
         }
 
         // GET: Users/Details/5

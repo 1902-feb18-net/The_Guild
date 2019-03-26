@@ -12,9 +12,11 @@ namespace The_Guild.WebApp.Models
         public int LoginInfoId { get; set; }
 
         [Required]
+        [Display(Name ="First Name")]
         public string FirstName { get; set; }
         
         [Required]
+        [Display(Name ="Last Name")]
         public string LastName { get; set; }
 
 
@@ -41,6 +43,7 @@ namespace The_Guild.WebApp.Models
         public int? Constitution { get; set; }
              
         [Range(0, 900000)]
+        [Display(Name = "Rank")]
         public int? RankId { get; set; }
 
         public IEnumerable<AdventureParty> AdventureParty { get; set; }
