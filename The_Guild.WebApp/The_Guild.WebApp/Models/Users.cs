@@ -9,7 +9,6 @@ namespace The_Guild.WebApp.Models
     public class Users
     {
         public int Id { get; set; }
-        public int LoginInfoId { get; set; }
 
         [Required]
         [Display(Name ="First Name")]
@@ -46,7 +45,7 @@ namespace The_Guild.WebApp.Models
         [Display(Name = "Rank")]
         public int? RankId { get; set; }
 
-        public IEnumerable<AdventureParty> AdventureParty { get; set; }
-        public IEnumerable<RequestingParty> RequestingParty { get; set; }
+        //public IEnumerable<AdventureParty> AdventureParty { get; set; }
+        //public IEnumerable<RequestingParty> RequestingParty { get; set; }
     }
 }

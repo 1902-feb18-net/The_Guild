@@ -93,7 +93,7 @@ namespace The_Guild.WebApp.Controllers
                     return View("Error");
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "request");
             }
             catch
             {
