@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using The_Guild.WebApp.ApiModels;
+using The_Guild.WebApp.Models;
 
 namespace The_Guild.WebApp.Controllers
 {
@@ -36,7 +36,7 @@ namespace The_Guild.WebApp.Controllers
 
             var jsonString = await response.Content.ReadAsStringAsync();
 
-            var requests = JsonConvert.DeserializeObject<List<ApiRequest>>(jsonString);
+            var requests = JsonConvert.DeserializeObject<List<Request>>(jsonString);
 
             return View(requests);
         }
@@ -58,7 +58,7 @@ namespace The_Guild.WebApp.Controllers
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
-            ApiRequest apiRequest = JsonConvert.DeserializeObject<ApiRequest>(jsonString);
+            Request apiRequest = JsonConvert.DeserializeObject<Request>(jsonString);
             return View(apiRequest);
         }
 
@@ -71,7 +71,7 @@ namespace The_Guild.WebApp.Controllers
         // POST: Request/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ApiRequest apiRequest)
+        public async Task<ActionResult> Create(Request apiRequest)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace The_Guild.WebApp.Controllers
                     return View("Error");
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "request");
             }
             catch
             {
@@ -111,7 +111,7 @@ namespace The_Guild.WebApp.Controllers
         // POST: Request/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, ApiRequest apiRequest)
+        public async Task<ActionResult> Edit(int id, Request apiRequest)
         {
             try
             {
@@ -156,7 +156,7 @@ namespace The_Guild.WebApp.Controllers
         // POST: Request/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, ApiRequest apiRequest)
+        public async Task<ActionResult> Delete(int id, Request apiRequest)
         {
             try
             {
