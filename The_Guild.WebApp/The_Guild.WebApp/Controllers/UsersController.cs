@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using The_Guild.WebApp.ApiModels;
+using The_Guild.WebApp.Models;
 using The_Guild.WebApp.ViewModel;
 
 namespace The_Guild.WebApp.Controllers
@@ -22,7 +23,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Users
         public async Task<ActionResult> Index()
         {
-            var request = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:Character"]);
+            var request = CreateRequestToService(HttpMethod.Get, "/api/users" );      //Configuration["ServiceEndpoints:Character"]);
             var response = await HttpClient.SendAsync(request);
 
             //var request2 = CreateRequestToService(HttpMethod.Get, "/api/ranks");
@@ -36,7 +37,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                return View("Error");
+                return View("Error", new ErrorViewModel());
             }
             //if (!response2.IsSuccessStatusCode)
             //{
@@ -55,6 +56,7 @@ namespace The_Guild.WebApp.Controllers
 
             var viewModels = users.Select(u => new UserIndexModel
             {
+                Id = u.Id,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
                 RankId = u.RankId,
@@ -78,24 +80,25 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
-                return View("Error");
+                return View("Error", new ErrorViewModel());
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
-            ApiUsers user = JsonConvert.DeserializeObject<ApiUsers>(jsonString);
+            Users user = JsonConvert.DeserializeObject<Users>(jsonString);
             return View(user);
         }
 
         // GET: Users/Create
         public ActionResult Create()
         {
-            return View();
+            Users user = new Users();
+            return View(user);
         }
 
         // POST: Users/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ApiUsers users)
+        public async Task<ActionResult> Create(Users users)
         {
             try
             {
@@ -114,7 +117,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -127,15 +130,29 @@ namespace The_Guild.WebApp.Controllers
         }
 
         // GET: Users/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var request = CreateRequestToService(HttpMethod.Get, $"/api/users/{id}");
+            var response = await HttpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                return View("Error", new ErrorViewModel());
+            }
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+            Users user = JsonConvert.DeserializeObject<Users>(jsonString);
+            return View(user);
         }
 
         // POST: Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, ApiUsers users)
+        public async Task<ActionResult> Edit(int id, Users users)
         {
             try
             {
@@ -153,7 +170,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -166,15 +183,29 @@ namespace The_Guild.WebApp.Controllers
         }
 
         // GET: Users/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var request = CreateRequestToService(HttpMethod.Get, $"/api/users/{id}");
+            var response = await HttpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                return View("Error", new ErrorViewModel());
+            }
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+            Users user = JsonConvert.DeserializeObject<Users>(jsonString);
+            return View(user);
         }
 
         // POST: Users/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, ApiUsers users)
+        public async Task<ActionResult> Delete(int id, Users users)
         {
             try
             {
@@ -192,7 +223,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));

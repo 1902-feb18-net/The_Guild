@@ -7,7 +7,7 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/Styles/Welcome.css" />
+        <link rel="stylesheet" href="~/Styles/Common.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
@@ -20,7 +20,7 @@
 </head>
 <body>
     <header>
-        <nav class="custom-nav navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="common-nav navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">The Guild</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -56,8 +56,8 @@
     @* The @renderbody() is needed to render razor page items not enclosed by an item type and will cause errors if not included
         the above part is commented out because we dont care about the cookies permission and asthetic reasons*@
     @RenderBody()
-    <footer class="border-top footer text-muted">
-        <div class="container">
+    <footer class="border-top footer text-muted common-footer">
+        <div class="container common-footer">
             &copy; 2019 - The Guild
         </div>
     </footer>

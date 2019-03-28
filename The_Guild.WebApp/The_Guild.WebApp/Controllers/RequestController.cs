@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using The_Guild.WebApp.ApiModels;
+using The_Guild.WebApp.Models;
 
 namespace The_Guild.WebApp.Controllers
 {
@@ -31,7 +32,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
-                return View("Error");
+                return View("Error", new ErrorViewModel());
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
@@ -54,7 +55,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
-                return View("Error");
+                return View("Error", new ErrorViewModel());
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
@@ -90,7 +91,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -129,7 +130,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -174,7 +175,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
