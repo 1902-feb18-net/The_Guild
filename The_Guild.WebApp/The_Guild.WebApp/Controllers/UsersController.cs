@@ -38,7 +38,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                return View("Error");
+                return View("Error", new ErrorViewModel());
             }
             //if (!response2.IsSuccessStatusCode)
             //{
@@ -57,6 +57,7 @@ namespace The_Guild.WebApp.Controllers
 
             var viewModels = users.Select(u => new UserIndexModel
             {
+                Id = u.Id,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
                 RankId = u.RankId,
@@ -80,7 +81,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
-                return View("Error");
+                return View("Error", new ErrorViewModel());
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
@@ -116,7 +117,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -155,7 +156,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -194,7 +195,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));

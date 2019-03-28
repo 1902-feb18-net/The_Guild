@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using The_Guild.WebApp.ApiModels;
 using The_Guild.WebApp.Models;
 
 namespace The_Guild.WebApp.Controllers
@@ -31,7 +32,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
-                return View("Error");
+                return View("Error", new ErrorViewModel());
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
@@ -54,7 +55,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
-                return View("Error");
+                return View("Error", new ErrorViewModel());
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
@@ -90,7 +91,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -129,7 +130,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -142,9 +143,15 @@ namespace The_Guild.WebApp.Controllers
         }
 
         // GET: Rank/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            //if (!(Account?.Roles?.Contains("admin") ?? false))
+            //{
+            //    // access denied
+            //    return View("Error", new ErrorViewModel());
+            //}
+            // implementation of GET Details identical
+            return await Details(id);
         }
 
         // POST: Rank/Delete/5
@@ -168,7 +175,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
