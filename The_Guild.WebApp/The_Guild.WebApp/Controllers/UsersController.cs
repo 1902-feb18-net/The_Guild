@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using The_Guild.WebApp.ApiModels;
 using The_Guild.WebApp.Models;
 using The_Guild.WebApp.ViewModel;
+using The_Guild.WebApp.Models;
 
 namespace The_Guild.WebApp.Controllers
 {
@@ -23,7 +24,8 @@ namespace The_Guild.WebApp.Controllers
         // GET: Users
         public async Task<ActionResult> Index()
         {
-            var request = CreateRequestToService(HttpMethod.Get, "/api/users" );      //Configuration["ServiceEndpoints:Character"]);
+            var request = CreateRequestToService(HttpMethod.Get, "api/users");
+
             var response = await HttpClient.SendAsync(request);
 
             //var request2 = CreateRequestToService(HttpMethod.Get, "/api/ranks");
@@ -49,7 +51,7 @@ namespace The_Guild.WebApp.Controllers
             //}
 
             var jsonString = await response.Content.ReadAsStringAsync();
-            var users = JsonConvert.DeserializeObject<List<ApiUsers>>(jsonString);
+            var users = JsonConvert.DeserializeObject<List<Users>>(jsonString);
 
             //var jsonString2 = await response.Content.ReadAsStringAsync();
             //var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString2);
@@ -107,7 +109,7 @@ namespace The_Guild.WebApp.Controllers
                     return View(users);
                 }
 
-                var request = CreateRequestToService(HttpMethod.Post, "/api/users", users);
+                var request = CreateRequestToService(HttpMethod.Post, "/api/users/create", users);
 
                 var response = await HttpClient.SendAsync(request);
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using The_Guild.WebApp.ApiModels;
+using The_Guild.WebApp.Models;
 
 namespace The_Guild.WebApp.Controllers
 {
@@ -71,14 +72,83 @@ namespace The_Guild.WebApp.Controllers
             return false;
         }
 
-        public IActionResult Logout()
+        // POST: /Account/Logout
+        [HttpPost]
+        public async Task<ActionResult> Logout()
+        {
+            HttpRequestMessage request = CreateRequestToService(HttpMethod.Post,
+                "/api/accout/logout");
+
+            HttpResponseMessage response;
+            try
+            {
+                response = await HttpClient.SendAsync(request);
+            }
+            catch (HttpRequestException)
+            {
+                return View("Error", new ErrorViewModel());
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return View("Error", new ErrorViewModel());
+            }
+
+            var success = PassCookiesToClient(response);
+            if (!success)
+            {
+                return View("Error", new ErrorViewModel());
+            }
+
+            // logout success
+            return RedirectToAction("Index", "Home");
+        }
+
+        // GET: /Account/Register
+        public ActionResult Register()
         {
             return View();
         }
 
-        public IActionResult Register()
+        // POST: /Account/Register
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register(ApiRegister register)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(register);
+            }
+
+            HttpRequestMessage request = CreateRequestToService(HttpMethod.Post,
+                "api/account/register", register);
+
+            HttpResponseMessage response;
+            try
+            {
+                response = await HttpClient.SendAsync(request);
+            }
+            catch (HttpRequestException)
+            {
+                ModelState.AddModelError("", "Unexpected server error");
+                return View(register);
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError("", "Unexpected server error");
+                return View(register);
+            }
+
+            var success = PassCookiesToClient(response);
+            if (!success)
+            {
+                ModelState.AddModelError("", "Unexpected server error");
+                return View(register);
+            }
+
+            // login success
+            return RedirectToAction("Index", "Home");
         }
     }
 }

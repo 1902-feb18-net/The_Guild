@@ -1,15 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using The_Guild.WebApp.ApiModels;
 using The_Guild.WebApp.Models;
+using The_Guild.WebApp.ViewModel;
+
 
 namespace The_Guild.WebApp.Controllers
 {
@@ -37,7 +35,7 @@ namespace The_Guild.WebApp.Controllers
 
             var jsonString = await response.Content.ReadAsStringAsync();
 
-            var requests = JsonConvert.DeserializeObject<List<ApiRequest>>(jsonString);
+            var requests = JsonConvert.DeserializeObject<List<Request>>(jsonString);
 
             return View(requests);
         }
@@ -59,29 +57,59 @@ namespace The_Guild.WebApp.Controllers
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
-            ApiRequest apiRequest = JsonConvert.DeserializeObject<ApiRequest>(jsonString);
-            return View(apiRequest);
+            Request dbRequest = JsonConvert.DeserializeObject<Request>(jsonString);
+            return View(dbRequest);
         }
 
         // GET: Request/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            RequestViewModel dbRequest = new RequestViewModel();
+            //get all available customers to choose during submission?
+            var usersRequest = CreateRequestToService(HttpMethod.Get, $"/api/users");
+            var usersResponse = await HttpClient.SendAsync(usersRequest);
+            var usersJsonString = await usersResponse.Content.ReadAsStringAsync();
+            var users = JsonConvert.DeserializeObject<List<Users>>(usersJsonString);
+            foreach (Users customer in users)
+            {
+                dbRequest.requesters.Add(new RequesterViewModel(customer));
+            }
+            return View(dbRequest);
         }
 
         // POST: Request/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ApiRequest apiRequest)
+        public async Task<ActionResult> Create(RequestViewModel dbRequest)
         {
             try
-            {
+            {     
                 if (!ModelState.IsValid)
                 {
-                    return View(apiRequest);
+                    return View(dbRequest);
                 }
 
-                var request = CreateRequestToService(HttpMethod.Post, "/api/request", apiRequest);
+                var Request = new Request()
+                {
+                    Descript = dbRequest.Descript,
+                    Requirements = dbRequest.Requirements,
+                    Reward = dbRequest.Reward
+                };
+
+                //add Requesting group members to request response
+                for (var i = 0; i < dbRequest.requesters.Count; i++)
+                {
+                    if (dbRequest.requesters[i].Checked)
+                    {
+                        var user = new Users()
+                        {
+                            Id = dbRequest.requesters[i].Id
+                        };
+                        Request.Requesters.Add(user);
+                    }
+                }    
+
+                var request = CreateRequestToService(HttpMethod.Post, "/api/request", Request);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -94,33 +122,48 @@ namespace The_Guild.WebApp.Controllers
                     return View("Error", new ErrorViewModel());
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "request");
             }
             catch
             {
                 // log it
-                return View(apiRequest);
+                return View(dbRequest);
             }
         }
 
         // GET: Request/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            RequestViewModel edit = new RequestViewModel();
+
+            //get all available progresses and ranks to choose from
+            var request = CreateRequestToService(HttpMethod.Get, $"/api/progress");
+            var response = await HttpClient.SendAsync(request);
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var progresses = JsonConvert.DeserializeObject<List<Progress>>(jsonString);
+            edit.progresses = progresses;
+
+            var request2 = CreateRequestToService(HttpMethod.Get, $"/api/ranks");
+            var response2 = await HttpClient.SendAsync(request2);
+            var jsonString2 = await response2.Content.ReadAsStringAsync();
+            var ranks = JsonConvert.DeserializeObject<List<Ranks>>(jsonString2);
+            edit.ranks = ranks;
+
+            return View(edit);
         }
 
         // POST: Request/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, ApiRequest apiRequest)
+        public async Task<ActionResult> Edit(int id, RequestViewModel dbRequest)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(apiRequest);
+                    return View(dbRequest);
                 }
-                var request = CreateRequestToService(HttpMethod.Put, $"/api/request/{id}", apiRequest);
+                var request = CreateRequestToService(HttpMethod.Put, $"/api/request/{id}", dbRequest);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -138,7 +181,7 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
-                return View(apiRequest);
+                return View(dbRequest);
             }
         }
 
@@ -157,15 +200,15 @@ namespace The_Guild.WebApp.Controllers
         // POST: Request/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, ApiRequest apiRequest)
+        public async Task<ActionResult> Delete(int id, Request dbRequest)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(apiRequest);
+                    return View(dbRequest);
                 }
-                var request = CreateRequestToService(HttpMethod.Delete, $"/api/request/{id}", apiRequest);
+                var request = CreateRequestToService(HttpMethod.Delete, $"/api/request/{id}", dbRequest);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -183,7 +226,7 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
-                return View(apiRequest);
+                return View(dbRequest);
             }
         }
     }
