@@ -20,7 +20,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Request
         public async Task<ActionResult> Index()
         {
-            var request = CreateRequestToService(HttpMethod.Get, "/api/request");
+            var request = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:Request"]);
 
             var response = await HttpClient.SendAsync(request);
 
@@ -41,7 +41,7 @@ namespace The_Guild.WebApp.Controllers
 
             foreach (Request dbRequest in requests)
             {
-                var progRequest = CreateRequestToService(HttpMethod.Get, $"/api/progress/{dbRequest.ProgressId}");
+                var progRequest = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Request"]}/{dbRequest.ProgressId}");
                 var progResponse = await HttpClient.SendAsync(progRequest);
                 var progJsonString = await progResponse.Content.ReadAsStringAsync();
                 var dbProg = JsonConvert.DeserializeObject<Progress>(progJsonString);
@@ -55,7 +55,6 @@ namespace The_Guild.WebApp.Controllers
                     dbRank = JsonConvert.DeserializeObject<Ranks>(rankJsonString);
                 }
  
-
                 RequestViewModel requestViewModel = new RequestViewModel(dbRequest)
                 {
                     Progress = dbProg,
@@ -71,7 +70,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Request/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var request = CreateRequestToService(HttpMethod.Get, $"/api/request/{id}");
+            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Request"]}/{id}");
 
             var response = await HttpClient.SendAsync(request);
 
@@ -87,12 +86,12 @@ namespace The_Guild.WebApp.Controllers
             var jsonString = await response.Content.ReadAsStringAsync();
             Request dbRequest = JsonConvert.DeserializeObject<Request>(jsonString);
 
-            var progRequest = CreateRequestToService(HttpMethod.Get, $"/api/progress/{dbRequest.ProgressId}");
+            var progRequest = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Progress"]}/{dbRequest.ProgressId}");
             var progResponse = await HttpClient.SendAsync(progRequest);
             var progJsonString = await progResponse.Content.ReadAsStringAsync();
             var dbProg = JsonConvert.DeserializeObject<Progress>(progJsonString);
 
-            var rankRequest = CreateRequestToService(HttpMethod.Get, $"/api/rank/{dbRequest.RankId}");
+            var rankRequest = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}/{dbRequest.RankId}");
             var rankResponse = await HttpClient.SendAsync(rankRequest);
             var rankJsonString = await rankResponse.Content.ReadAsStringAsync();
             var dbRank = JsonConvert.DeserializeObject<Ranks>(rankJsonString);
@@ -111,7 +110,7 @@ namespace The_Guild.WebApp.Controllers
         {
             RequestViewModel dbRequest = new RequestViewModel();
             //get all available customers to choose during submission?
-            var usersRequest = CreateRequestToService(HttpMethod.Get, $"/api/users");
+            var usersRequest = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:Users"]);
             var usersResponse = await HttpClient.SendAsync(usersRequest);
             var usersJsonString = await usersResponse.Content.ReadAsStringAsync();
             var users = JsonConvert.DeserializeObject<List<Users>>(usersJsonString);
@@ -154,7 +153,7 @@ namespace The_Guild.WebApp.Controllers
                     }
                 }    
 
-                var request = CreateRequestToService(HttpMethod.Post, "/api/request", Request);
+                var request = CreateRequestToService(HttpMethod.Post, Configuration["ServiceEndpoints:Request"], Request);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -182,13 +181,13 @@ namespace The_Guild.WebApp.Controllers
             RequestViewModel edit = new RequestViewModel();
 
             //get all available progresses and ranks to choose from
-            var request = CreateRequestToService(HttpMethod.Get, $"/api/progress");
+            var request = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:Request"]);
             var response = await HttpClient.SendAsync(request);
             var jsonString = await response.Content.ReadAsStringAsync();
             var progresses = JsonConvert.DeserializeObject<List<Progress>>(jsonString);
             edit.progresses = progresses;
 
-            var request2 = CreateRequestToService(HttpMethod.Get, $"/api/ranks");
+            var request2 = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:Ranks"]);
             var response2 = await HttpClient.SendAsync(request2);
             var jsonString2 = await response2.Content.ReadAsStringAsync();
             var ranks = JsonConvert.DeserializeObject<List<Ranks>>(jsonString2);
@@ -208,7 +207,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return View(dbRequest);
                 }
-                var request = CreateRequestToService(HttpMethod.Put, $"/api/request/{id}", dbRequest);
+                var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Request"]}/{id}", dbRequest);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -253,7 +252,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return View(dbRequest);
                 }
-                var request = CreateRequestToService(HttpMethod.Delete, $"/api/request/{id}", dbRequest);
+                var request = CreateRequestToService(HttpMethod.Delete, $"{Configuration["ServiceEndpoints:Request"]}/{id}", dbRequest);
 
                 var response = await HttpClient.SendAsync(request);
 

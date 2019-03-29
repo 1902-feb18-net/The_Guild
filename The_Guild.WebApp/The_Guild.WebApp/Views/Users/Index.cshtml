@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width" />
     <link href="~/Styles/User.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body class="user-bg1">
     <h1 class="user-default text-shadow">Users</h1>
 
@@ -38,7 +39,7 @@
                     @Html.DisplayFor(modelItem => item.LastName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RankId)
+                    @Html.DisplayFor(modelItem => item.Rank.Name)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
