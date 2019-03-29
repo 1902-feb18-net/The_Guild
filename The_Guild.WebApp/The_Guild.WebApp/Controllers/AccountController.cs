@@ -54,10 +54,8 @@ namespace The_Guild.WebApp.Controllers
             }
 
             // login success
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Request");
         }
-
-        // should also have register and logout
 
         private bool PassCookiesToClient(HttpResponseMessage apiResponse)
         {
@@ -101,7 +99,7 @@ namespace The_Guild.WebApp.Controllers
             }
 
             // logout success
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         // GET: /Account/Register
