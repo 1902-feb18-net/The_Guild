@@ -46,11 +46,15 @@ namespace The_Guild.WebApp.Controllers
                 var progJsonString = await progResponse.Content.ReadAsStringAsync();
                 var dbProg = JsonConvert.DeserializeObject<Progress>(progJsonString);
 
-                var rankRequest = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}/{dbRequest.RankId}");
-                var rankResponse = await HttpClient.SendAsync(rankRequest);
-                var rankJsonString = await rankResponse.Content.ReadAsStringAsync();
-                var dbRank = JsonConvert.DeserializeObject<Ranks>(progJsonString);
-
+                Ranks dbRank = null;
+                if (dbRequest.RankId != null)
+                {
+                    var rankRequest = CreateRequestToService(HttpMethod.Get, $"/api/ranks/{dbRequest.RankId}");
+                    var rankResponse = await HttpClient.SendAsync(rankRequest);
+                    var rankJsonString = await rankResponse.Content.ReadAsStringAsync();
+                    dbRank = JsonConvert.DeserializeObject<Ranks>(rankJsonString);
+                }
+ 
                 RequestViewModel requestViewModel = new RequestViewModel(dbRequest)
                 {
                     Progress = dbProg,
@@ -90,7 +94,7 @@ namespace The_Guild.WebApp.Controllers
             var rankRequest = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}/{dbRequest.RankId}");
             var rankResponse = await HttpClient.SendAsync(rankRequest);
             var rankJsonString = await rankResponse.Content.ReadAsStringAsync();
-            var dbRank = JsonConvert.DeserializeObject<Ranks>(progJsonString);
+            var dbRank = JsonConvert.DeserializeObject<Ranks>(rankJsonString);
 
             RequestViewModel requestViewModel = new RequestViewModel(dbRequest)
             {
