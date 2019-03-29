@@ -22,7 +22,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Rank
         public async Task<ActionResult> Index()
         {
-            var request = CreateRequestToService(HttpMethod.Get, "/api/ranks");
+            var request = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:Ranks"]);
 
             var response = await HttpClient.SendAsync(request);
 
@@ -45,7 +45,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Rank/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var request = CreateRequestToService(HttpMethod.Get, $"/api/ranks/{id}");
+            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}/{id}");
 
             var response = await HttpClient.SendAsync(request);
 
@@ -81,7 +81,7 @@ namespace The_Guild.WebApp.Controllers
                     return View(rank);
                 }
 
-                var request = CreateRequestToService(HttpMethod.Post, "/api/ranks", rank);
+                var request = CreateRequestToService(HttpMethod.Post, Configuration["ServiceEndpoints:Ranks"], rank);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -120,7 +120,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return View(rank);
                 }
-                var request = CreateRequestToService(HttpMethod.Put, $"/api/ranks/{id}", rank);
+                var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Ranks"]}/{id}", rank);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -165,7 +165,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return View(rank);
                 }
-                var request = CreateRequestToService(HttpMethod.Delete, $"/api/ranks/{id}", rank);
+                var request = CreateRequestToService(HttpMethod.Delete, $"{Configuration["ServiceEndpoints:Ranks"]}/{id}", rank);
 
                 var response = await HttpClient.SendAsync(request);
 
