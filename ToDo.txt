@@ -1,0 +1,41 @@
+
+Across all Views: All nullable values should show something like N/A instead of blank spaces when null?
+
+Users edit should only be accessible by that user logged in,
+and should not display stats+salary if logged in user's role is not an adventurer.
+Admin only shoiuld delete.
+
+Need to be able to accept a request, with a way to set up the adventurer party when accepting.
+This should automatically move request's progress from approved to accepted.
+
+Request Create should automatically add the logged in user? (Already has requesting group selection.)
+Request edit should show their ID, but not edit for it. 
+Request edit view/controller needs authorization checks. 
+Request details should show requesting group and, if accepted or later progress, the adventurer party.
+Need to be able to update request's party? 
+
+Still need a way to retrieve a user's (customer's) submitted requests and (adventurer's) accepted requests
+As well as Rank Requirements.
+Still need Users rankup.
+
+Add logic so that cannot update from later progress backwards (can only progress forward), 
+and customer can only update descript/requirements/reward when progress is pending, 
+and receptionist can only update rank when progress is pending, and set progress to declined/approved,
+and adventurer can only update their accepted requests' progress.
+Setting/updating request's rank should auto update request's cost!
+
+
+Still need Angular GM stuff.
+
+
+Non-MVP stuff:
+Sort requests by progress or rank.
+Sort users/adventurers by rank.
+
+
+Anything new 
+Tests haven't broken. Showed adding to db worked. Setting FK ID dependencies broke test, 
+realized had to call savechanges.
+SonarCloud realized not using camelCase to name some classes. Left connection string after rescaffolding. 
+Realized variable was declared and not being used when it should have been.
+DevOps 
