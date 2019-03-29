@@ -38,7 +38,7 @@ namespace The_Guild.WebApp.Controllers
             var jsonString = await response.Content.ReadAsStringAsync();
             var users = JsonConvert.DeserializeObject<List<ApiUsers>>(jsonString);
 
-            request = CreateRequestToService(HttpMethod.Get, "/api/ranks");
+            request = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:Ranks"]);
             response = await HttpClient.SendAsync(request);
             if (!response.IsSuccessStatusCode)
             {
