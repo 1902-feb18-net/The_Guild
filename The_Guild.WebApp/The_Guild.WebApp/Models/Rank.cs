@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 
 namespace The_Guild.WebApp.Models
 {
-    public class LoginInfo
+    public class Rank
     {
-
         public int Id { get; set; }
 
         [Required]
-        public string Username { get; set; }
+        public string Name { get; set; }
 
-        [Required]
-        public string Pass { get; set; }
-
-        public IEnumerable<Users> Users { get; set; }
+        [Range(0.00, 900000.00)]
+        public decimal Fee { get; set; }
     }
 }

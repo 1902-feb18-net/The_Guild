@@ -1,75 +1,118 @@
-﻿@model IEnumerable<The_Guild.WebApp.Models.Request>
+﻿@model IEnumerable<The_Guild.WebApp.ViewModel.RequestViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Requests";
     var account = ViewData["accountDetails"] as The_Guild.WebApp.ApiModels.ApiLogin;
 }
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Styles/User.css" rel="stylesheet" type="text/css" />
+</head>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProgressId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RankId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reward)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descript)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Requirements)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProgressId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RankId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reward)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descript)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Requirements)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                | @Html.ActionLink("Details", "Details", new { id = item.Id })
-                @*@if (account?.Roles?.Contains("admin") ?? false)
+<body class="user-bg1">
+    <h1 class="user-default">Requests</h1>
+    <p class="user-default">
+        <a asp-action="Create" class="user-button">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr class="user-table-header">
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descript)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Requirements)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Reward)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Progress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rank)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cost)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr class="user-table-row">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descript)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Requirements)
+                </td>
+                @if (item.Reward != null)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reward)
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.Raw("N/A")
+                    </td>
+                }
+                @if (item.Progress != null && item.Progress.Nam != null)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Progress.Nam)
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.Raw("N/A")
+                    </td>
+                }
+                @if (item.Rank != null && item.Rank.Name != null)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rank.Name)
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.Raw("TBD")
+                    </td>
+                }
+                @if (item.Cost != null)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cost)
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.Raw("TBD")
+                    </td>
+                }
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                    | @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    @*| @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                    @*@if (account?.Roles?.Contains("admin") ?? false)
                 {
                     @:| @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 }*@
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</body>

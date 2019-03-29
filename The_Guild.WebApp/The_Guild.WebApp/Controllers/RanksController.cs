@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using The_Guild.WebApp.ApiModels;
 using The_Guild.WebApp.Models;
 
 namespace The_Guild.WebApp.Controllers
@@ -21,7 +22,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Rank
         public async Task<ActionResult> Index()
         {
-            var request = CreateRequestToService(HttpMethod.Get, "/api/ranks");
+            var request = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:Ranks"]);
 
             var response = await HttpClient.SendAsync(request);
 
@@ -31,7 +32,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
-                return View("Error");
+                return View("Error", new ErrorViewModel());
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
@@ -44,7 +45,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Rank/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var request = CreateRequestToService(HttpMethod.Get, $"/api/ranks/{id}");
+            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}/{id}");
 
             var response = await HttpClient.SendAsync(request);
 
@@ -54,7 +55,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return RedirectToAction("Login", "Account");
                 }
-                return View("Error");
+                return View("Error", new ErrorViewModel());
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
@@ -80,7 +81,7 @@ namespace The_Guild.WebApp.Controllers
                     return View(rank);
                 }
 
-                var request = CreateRequestToService(HttpMethod.Post, "/api/ranks", rank);
+                var request = CreateRequestToService(HttpMethod.Post, Configuration["ServiceEndpoints:Ranks"], rank);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -90,7 +91,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -119,7 +120,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return View(rank);
                 }
-                var request = CreateRequestToService(HttpMethod.Put, $"/api/ranks/{id}", rank);
+                var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Ranks"]}/{id}", rank);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -129,7 +130,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -142,9 +143,15 @@ namespace The_Guild.WebApp.Controllers
         }
 
         // GET: Rank/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            //if (!(Account?.Roles?.Contains("admin") ?? false))
+            //{
+            //    // access denied
+            //    return View("Error", new ErrorViewModel());
+            //}
+            // implementation of GET Details identical
+            return await Details(id);
         }
 
         // POST: Rank/Delete/5
@@ -158,7 +165,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return View(rank);
                 }
-                var request = CreateRequestToService(HttpMethod.Delete, $"/api/ranks/{id}", rank);
+                var request = CreateRequestToService(HttpMethod.Delete, $"{Configuration["ServiceEndpoints:Ranks"]}/{id}", rank);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -168,7 +175,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         return RedirectToAction("Login", "Account");
                     }
-                    return View("Error");
+                    return View("Error", new ErrorViewModel());
                 }
 
                 return RedirectToAction(nameof(Index));
