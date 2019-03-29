@@ -8,53 +8,51 @@
     <link href="~/Styles/User.css" rel="stylesheet" type="text/css" />
 </head>
 
-<h1>Create</h1>
-
-<h4>Request</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Descript" class="control-label"></label>
-                <input asp-for="Descript" class="form-control" />
-                <span asp-validation-for="Descript" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Requirements" class="control-label"></label>
-                <input asp-for="Requirements"  class="form-control" />
-                <span asp-validation-for="Requirements" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reward" class="control-label"></label>
-                <input asp-for="Reward" class="form-control" />
-                <span asp-validation-for="Reward" class="text-danger"></span>
-            </div>
-            @* Display all users to select requesting group *@
-            <div>
-                @Html.LabelFor(model => model.requesters)
-                <br />
-                @for (var i = 0; i < Model.requesters.Count; i++)
-                {
-                    @Html.HiddenFor(m => Model.requesters[i].Id)
-                    @Html.CheckBoxFor(m => Model.requesters[i].Checked)
-                    @Model.requesters[i].FirstName                    
-                    @Html.Raw(" ") //need space here
-                    @Model.requesters[i].LastName
-                    <br />
-                }
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<body class="user-bg1">
+    <h1 class="user-default user-pad">Create</h1>
+    <div class="user-default user-pad">
+        <a asp-action="Index" class="user-button">Back to List</a>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="user-create">
+        <div class="col-md-4">
+            <form asp-action="Create" class="user-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Descript" class="control-label"></label>
+                    <input asp-for="Descript" class="form-control" />
+                    <span asp-validation-for="Descript" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Requirements" class="control-label"></label>
+                    <input asp-for="Requirements" class="form-control" />
+                    <span asp-validation-for="Requirements" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Reward" class="control-label"></label>
+                    <input asp-for="Reward" class="form-control" />
+                    <span asp-validation-for="Reward" class="text-danger"></span>
+                </div>
+                @* Display all users to select requesting group *@
+                <div>
+                    @Html.LabelFor(model => model.requesters)
+                    <br />
+                    @for (var i = 0; i < Model.requesters.Count; i++)
+                    {
+                        @Html.HiddenFor(m => Model.requesters[i].Id)
+                        @Html.CheckBoxFor(m => Model.requesters[i].Checked)
+                        @Model.requesters[i].FirstName
+                        @Html.Raw(" ") //need space here
+                        @Model.requesters[i].LastName
+                        <br />
+                    }
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
