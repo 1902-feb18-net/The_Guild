@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using The_Guild.WebApp.ApiModels;
 
 namespace The_Guild.WebApp.Models
 {
@@ -44,7 +45,8 @@ namespace The_Guild.WebApp.Models
         [Range(0, 900000)]
         [Display(Name = "Rank")]
         public int? RankId { get; set; }
-        public Rank Rank { get; set; }
+        public ApiRanks Rank { get; set; }
+        public IEnumerable<ApiRanks> Ranks { get; set; }
 
         //public IEnumerable<AdventureParty> AdventureParty { get; set; }
         //public IEnumerable<RequestingParty> RequestingParty { get; set; }

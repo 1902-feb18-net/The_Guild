@@ -3,89 +3,93 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Styles/User.css" rel="stylesheet" type="text/css" />
+</head>
 
-<h1>Edit</h1>
-
-<h4>Request</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Reward" class="control-label"></label>
-                <input asp-for="Reward" class="form-control" />
-                <span asp-validation-for="Reward" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Descript" class="control-label"></label>
-                <input asp-for="Descript" class="form-control" />
-                <span asp-validation-for="Descript" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Requirements" class="control-label"></label>
-                <input asp-for="Requirements" class="form-control" />
-                <span asp-validation-for="Requirements" class="text-danger"></span>
-            </div>
-            @*<dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.RankId)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.RankId)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ProgressId)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ProgressId)
-            </dd>
-        </dl>*@
-            @*<dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Rank.Name)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Rank.Name)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Progress.Nam)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Progress.Nam)
-            </dd>
-        </dl>*@
-            @if (Model.ranks != null)
-            {
-                <div class="form-group">
-                    @*<label asp-for="Rank" class="control-label"></label>*@
-                    @*<select asp-for="Rank.Id"*@
-                    <label asp-for="RankId" class="control-label"></label>
-                    <select asp-for="RankId"
-                            asp-items="@(new SelectList(Model.ranks, "Id", "Name"))" class="form-control"></select>
-                </div>
-            }
-            @if (Model.progresses != null)
-            {
-                <div class="form-group">
-                    @*<label asp-for="Progress" class="control-label"></label>*@
-                    @*<select asp-for="Progress.Id"*@
-                    <label asp-for="ProgressId" class="control-label"></label>
-                    <select asp-for="ProgressId"
-                            asp-items="@(new SelectList(Model.progresses, "Id", "Nam"))" class="form-control"></select>
-
-                </div>
-            }
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<body class="user-bg1">
+    <h1>Edit</h1>
+    <div>
+        <a asp-action="Index">Back to List</a>
     </div>
-</div>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Reward" class="control-label"></label>
+                    <input asp-for="Reward" class="form-control" />
+                    <span asp-validation-for="Reward" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Descript" class="control-label"></label>
+                    <input asp-for="Descript" class="form-control" />
+                    <span asp-validation-for="Descript" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Requirements" class="control-label"></label>
+                    <input asp-for="Requirements" class="form-control" />
+                    <span asp-validation-for="Requirements" class="text-danger"></span>
+                </div>
+                @*<dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.RankId)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.RankId)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ProgressId)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ProgressId)
+                </dd>
+            </dl>*@
+                @*<dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Rank.Name)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Rank.Name)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Progress.Nam)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Progress.Nam)
+                </dd>
+            </dl>*@
+                @if (Model.ranks != null)
+                {
+                    <div class="form-group">
+                        @*<label asp-for="Rank" class="control-label"></label>*@
+                        @*<select asp-for="Rank.Id"*@
+                        <label asp-for="RankId" class="control-label"></label>
+                        <select asp-for="RankId"
+                                asp-items="@(new SelectList(Model.ranks, "Id", "Name"))" class="form-control"></select>
+                    </div>
+                }
+                @if (Model.progresses != null)
+                {
+                    <div class="form-group">
+                        @*<label asp-for="Progress" class="control-label"></label>*@
+                        @*<select asp-for="Progress.Id"*@
+                        <label asp-for="ProgressId" class="control-label"></label>
+                        <select asp-for="ProgressId"
+                                asp-items="@(new SelectList(Model.progresses, "Id", "Nam"))" class="form-control"></select>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+                    </div>
+                }
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
