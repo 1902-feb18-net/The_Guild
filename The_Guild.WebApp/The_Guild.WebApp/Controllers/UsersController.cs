@@ -11,7 +11,6 @@ using Newtonsoft.Json;
 using The_Guild.WebApp.ApiModels;
 using The_Guild.WebApp.Models;
 using The_Guild.WebApp.ViewModel;
-using The_Guild.WebApp.Models;
 
 namespace The_Guild.WebApp.Controllers
 {
@@ -71,7 +70,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Users/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:User"]}/{id}");
+            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Users"]}/{id}");
             var response = await HttpClient.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -132,7 +131,6 @@ namespace The_Guild.WebApp.Controllers
                 ApiUsers tUser = new ApiUsers
                 {
                     Id = users.Id,
-                    LoginInfoId = users.LoginInfoId,
                     FirstName = users.FirstName,
                     LastName = users.LastName,
                     Salary = users.Salary,
@@ -144,7 +142,7 @@ namespace The_Guild.WebApp.Controllers
                     Constitution = users.Constitution,
                     RankId = users.RankId
                 };
-                var request = CreateRequestToService(HttpMethod.Post, Configuration["ServiceEndpoints:User"], tUser);
+                var request = CreateRequestToService(HttpMethod.Post, Configuration["ServiceEndpoints:Users"], tUser);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -169,7 +167,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Users/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints: User"]}/{id}");
+            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints: Users"]}/{id}");
             var response = await HttpClient.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -197,7 +195,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return View(users);
                 }
-                var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:User"]}/{id}", users);
+                var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Users"]}/{id}", users);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -222,7 +220,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Users/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:User"]}/{id}");
+            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Users"]}/{id}");
             var response = await HttpClient.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -250,7 +248,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return View(users);
                 }
-                var request = CreateRequestToService(HttpMethod.Delete, $"{Configuration["ServiceEndpoints:User"]}/{id}", users);
+                var request = CreateRequestToService(HttpMethod.Delete, $"{Configuration["ServiceEndpoints:Users"]}/{id}", users);
 
                 var response = await HttpClient.SendAsync(request);
 
