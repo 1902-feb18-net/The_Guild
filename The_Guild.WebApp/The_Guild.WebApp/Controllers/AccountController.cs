@@ -30,7 +30,7 @@ namespace The_Guild.WebApp.Controllers
                 return View(login);
             }
 
-            var request = CreateRequestToService(HttpMethod.Post, "/api/account/login", login);
+            var request = CreateRequestToService(HttpMethod.Post, Configuration["ServiceEndpoints:AccountLogin"], login);
 
             var response = await HttpClient.SendAsync(request);
 
@@ -77,7 +77,7 @@ namespace The_Guild.WebApp.Controllers
         public async Task<ActionResult> Logout()
         {
             HttpRequestMessage request = CreateRequestToService(HttpMethod.Post,
-                "/api/accout/logout");
+                Configuration["ServiceEndpoints:AccountLogout"]);
 
             HttpResponseMessage response;
             try
@@ -121,7 +121,7 @@ namespace The_Guild.WebApp.Controllers
             }
 
             HttpRequestMessage request = CreateRequestToService(HttpMethod.Post,
-                "api/account/register", register);
+                Configuration["ServiceEndpoints:AccountRegister"], register);
 
             HttpResponseMessage response;
             try
