@@ -7,5 +7,8 @@ namespace The_Guild.WebApp.ApiModels
 {
     public class ApiRegister
     {
+        public string Username { get; set; }
+        public string Password { get; set; }
+
     }
 }
