@@ -23,7 +23,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Users
         public async Task<ActionResult> Index()
         {
-            var request = CreateRequestToService(HttpMethod.Get, "/api/users" );      //Configuration["ServiceEndpoints:Character"]);
+            var request = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:User"]);      //Configuration["ServiceEndpoints:Character"]);
             var response = await HttpClient.SendAsync(request);
 
             //var request2 = CreateRequestToService(HttpMethod.Get, "/api/ranks");
@@ -70,8 +70,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Users/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var request = CreateRequestToService(HttpMethod.Get, $"/api/users/{id}");
-
+            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:User"]}/{id}");
             var response = await HttpClient.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -83,8 +82,31 @@ namespace The_Guild.WebApp.Controllers
                 return View("Error", new ErrorViewModel());
             }
 
+
             var jsonString = await response.Content.ReadAsStringAsync();
             Users user = JsonConvert.DeserializeObject<Users>(jsonString);
+
+            // Uncomment once ranks are available in the api...
+
+
+            // request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Rank"]}/{id}");
+            // response = await HttpClient.SendAsync(request);
+
+            //if (!response.IsSuccessStatusCode)
+            //{
+            //    if (response.StatusCode == HttpStatusCode.Unauthorized)
+            //    {
+            //        return RedirectToAction("Login", "Account");
+            //    }
+            //    return View("Error", new ErrorViewModel());
+            //}
+
+            // jsonString = await response.Content.ReadAsStringAsync();
+            //Ranks rank = JsonConvert.DeserializeObject<Ranks>(jsonString);
+
+
+
+
             return View(user);
         }
 
@@ -107,7 +129,22 @@ namespace The_Guild.WebApp.Controllers
                     return View(users);
                 }
 
-                var request = CreateRequestToService(HttpMethod.Post, "/api/users", users);
+                ApiUsers tUser = new ApiUsers
+                {
+                    Id = users.Id,
+                    LoginInfoId = users.LoginInfoId,
+                    FirstName = users.FirstName,
+                    LastName = users.LastName,
+                    Salary = users.Salary,
+                    Strength = users.Strength,
+                    Dex = users.Dex,
+                    Wisdom = users.Wisdom,
+                    Intelligence = users.Intelligence,
+                    Charisma = users.Charisma,
+                    Constitution = users.Constitution,
+                    RankId = users.RankId
+                };
+                var request = CreateRequestToService(HttpMethod.Post, Configuration["ServiceEndpoints:User"], tUser);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -132,7 +169,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Users/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var request = CreateRequestToService(HttpMethod.Get, $"/api/users/{id}");
+            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints: User"]}/{id}");
             var response = await HttpClient.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -160,7 +197,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return View(users);
                 }
-                var request = CreateRequestToService(HttpMethod.Put, $"/api/users/{id}", users);
+                var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:User"]}/{id}", users);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -185,7 +222,7 @@ namespace The_Guild.WebApp.Controllers
         // GET: Users/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            var request = CreateRequestToService(HttpMethod.Get, $"/api/users/{id}");
+            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:User"]}/{id}");
             var response = await HttpClient.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -213,7 +250,7 @@ namespace The_Guild.WebApp.Controllers
                 {
                     return View(users);
                 }
-                var request = CreateRequestToService(HttpMethod.Delete, $"/api/users/{id}", users);
+                var request = CreateRequestToService(HttpMethod.Delete, $"{Configuration["ServiceEndpoints:User"]}/{id}", users);
 
                 var response = await HttpClient.SendAsync(request);
 

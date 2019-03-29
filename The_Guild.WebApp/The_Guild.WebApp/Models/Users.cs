@@ -45,6 +45,7 @@ namespace The_Guild.WebApp.Models
         [Range(0, 900000)]
         [Display(Name = "Rank")]
         public int? RankId { get; set; }
+        public Rank Rank { get; set; }
 
         public IEnumerable<AdventureParty> AdventureParty { get; set; }
         public IEnumerable<RequestingParty> RequestingParty { get; set; }

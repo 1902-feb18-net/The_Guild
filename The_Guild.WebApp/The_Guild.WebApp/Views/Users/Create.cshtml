@@ -7,76 +7,78 @@
     <meta name="viewport" content="width=device-width" />
     <link href="~/Styles/User.css" rel="stylesheet" type="text/css" />
 </head>
-<h1 class="user-default user-pad">Create</h1>
-<div class=" user-create">
-    <div class="col-md-4">
-        <form asp-action="Create" class="user-form">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Salary" class="control-label"></label>
-                <input asp-for="Salary" type="number" min="0" max="90000" class="form-control" />
-                <span asp-validation-for="Salary" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Strength" class="control-label"></label>
-                <input asp-for="Strength" type="number" min="0" max="40" class="form-control" />
-                <span asp-validation-for="Strength" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Dex" class="control-label"></label>
-                <input asp-for="Dex" type="number" min="0" max="40" class="form-control" />
-                <span asp-validation-for="Dex" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Wisdom" class="control-label"></label>
-                <input asp-for="Wisdom" type="number" min="0" max="40" class="form-control" />
-                <span asp-validation-for="Wisdom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Intelligence" class="control-label"></label>
-                <input asp-for="Intelligence" type="number" min="0" max="40" class="form-control" />
-                <span asp-validation-for="Intelligence" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Charisma" class="control-label"></label>
-                <input asp-for="Charisma" type="number" min="0" max="40" class="form-control" />
-                <span asp-validation-for="Charisma" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Constitution" class="control-label"></label>
-                <input asp-for="Constitution" type="number" min="0" max="40" class="form-control" />
-                <span asp-validation-for="Constitution" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RankId" class="control-label"></label>
-                <input asp-for="RankId" class="form-control" />
-                <span asp-validation-for="RankId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div class="user-default user-pad">
-    <a asp-action="Index">Back to List</a>
-</div>
+<body class="user-bg1">
+    <h1 class="user-default user-pad">Create</h1>
+    <div class="user-default user-pad">
+        <a asp-action="Index" class="user-button">Back to List</a>
+    </div>
+    <div class=" user-create">
+        <div class="col-md-4">
+            <form asp-action="Create" class="user-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Salary" class="control-label"></label>
+                    <input asp-for="Salary" type="number" min="0" max="90000" class="form-control" />
+                    <span asp-validation-for="Salary" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Strength" class="control-label"></label>
+                    <input asp-for="Strength" type="number" min="0" max="40" class="form-control" />
+                    <span asp-validation-for="Strength" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Dex" class="control-label"></label>
+                    <input asp-for="Dex" type="number" min="0" max="40" class="form-control" />
+                    <span asp-validation-for="Dex" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Wisdom" class="control-label"></label>
+                    <input asp-for="Wisdom" type="number" min="0" max="40" class="form-control" />
+                    <span asp-validation-for="Wisdom" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Intelligence" class="control-label"></label>
+                    <input asp-for="Intelligence" type="number" min="0" max="40" class="form-control" />
+                    <span asp-validation-for="Intelligence" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Charisma" class="control-label"></label>
+                    <input asp-for="Charisma" type="number" min="0" max="40" class="form-control" />
+                    <span asp-validation-for="Charisma" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Constitution" class="control-label"></label>
+                    <input asp-for="Constitution" type="number" min="0" max="40" class="form-control" />
+                    <span asp-validation-for="Constitution" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RankId" class="control-label"></label>
+                    <input asp-for="RankId" class="form-control" />
+                    <span asp-validation-for="RankId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -19,7 +19,7 @@ namespace The_Guild.WebApp.ViewModel
 
         [Display(Name = "Rank")]
         public int? RankId { get; set; }
-        public Ranks Rank { get; set; }
+        public Rank Rank { get; set; }
         public List<ApiModels.ApiRanks> Ranks { get; set; }
 
     }
