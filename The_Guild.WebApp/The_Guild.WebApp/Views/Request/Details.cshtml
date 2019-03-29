@@ -1,4 +1,4 @@
-﻿@model The_Guild.WebApp.Models.Request
+﻿@model The_Guild.WebApp.ViewModel.RequestViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -14,48 +14,75 @@
     <h4>Request</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Id)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProgressId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProgressId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RankId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RankId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cost)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cost)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Reward)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Reward)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Descript)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Descript)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Requirements)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Requirements)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reward)
+        </dt>
+        @if (Model.Reward != null)
+        {
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Reward)
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                @Html.Raw("N/A")
+            </dd>
+        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Progress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Progress.Nam)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Rank)
+        </dt>
+        @if (Model.Rank != null && Model.Rank.Name != null)
+        {
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Rank.Name)
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                @Html.Raw("TBD")
+            </dd>
+        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cost)
+        </dt>
+        @if (Model.Cost != null)
+        {
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Cost)
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                @Html.Raw("TBD")
+            </dd>
+        }
     </dl>
 </div>
 <div>

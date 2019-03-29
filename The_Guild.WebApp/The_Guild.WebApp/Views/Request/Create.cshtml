@@ -39,9 +39,8 @@
                 {
                     @Html.HiddenFor(m => Model.requesters[i].Id)
                     @Html.CheckBoxFor(m => Model.requesters[i].Checked)
-                    @Model.requesters[i].FirstName
-                    //need space here
-                    @Html.Raw(" ")
+                    @Model.requesters[i].FirstName                    
+                    @Html.Raw(" ") //need space here
                     @Model.requesters[i].LastName
                     <br />
                 }
