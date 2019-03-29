@@ -76,3 +76,17 @@ customerID int Not Null,
 Constraint FK_requestinggroup_request FOREIGN KEY (requestID) REFERENCES Request (id),
 Constraint FK_requestinggroup_customer FOREIGN KEY (customerID) REFERENCES Users (id)
 );
+
+
+
+--Insert into Progress (Nam) Values ('Pending');
+
+--Insert into Progress (Nam) Values ('Declined');
+
+--Insert into Progress (Nam) Values ('Approved');
+
+--Insert into Progress (Nam) Values ('Accepted');
+
+--Insert into Progress (Nam) Values ('In-progress');
+
+--Insert into Progress (Nam) Values ('Completed');

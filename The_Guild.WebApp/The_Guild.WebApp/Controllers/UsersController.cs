@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using The_Guild.WebApp.ApiModels;
 using The_Guild.WebApp.Models;
 using The_Guild.WebApp.ViewModel;
+using The_Guild.WebApp.Models;
 
 namespace The_Guild.WebApp.Controllers
 {
@@ -81,7 +82,6 @@ namespace The_Guild.WebApp.Controllers
                 }
                 return View("Error", new ErrorViewModel());
             }
-
 
             var jsonString = await response.Content.ReadAsStringAsync();
             Users user = JsonConvert.DeserializeObject<Users>(jsonString);

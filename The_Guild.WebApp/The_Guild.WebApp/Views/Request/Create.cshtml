@@ -1,4 +1,4 @@
-﻿@model The_Guild.WebApp.ApiModels.ApiRequest
+﻿@model The_Guild.WebApp.ViewModel.RequestViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,26 +13,6 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ProgressId" class="control-label"></label>
-                <input asp-for="ProgressId" class="form-control" />
-                <span asp-validation-for="ProgressId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RankId" class="control-label"></label>
-                <input asp-for="RankId" class="form-control" />
-                <span asp-validation-for="RankId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cost" class="control-label"></label>
-                <input asp-for="Cost" class="form-control" />
-                <span asp-validation-for="Cost" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reward" class="control-label"></label>
-                <input asp-for="Reward" class="form-control" />
-                <span asp-validation-for="Reward" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Descript" class="control-label"></label>
                 <input asp-for="Descript" class="form-control" />
                 <span asp-validation-for="Descript" class="text-danger"></span>
@@ -41,6 +21,26 @@
                 <label asp-for="Requirements" class="control-label"></label>
                 <input asp-for="Requirements"  class="form-control" />
                 <span asp-validation-for="Requirements" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reward" class="control-label"></label>
+                <input asp-for="Reward" class="form-control" />
+                <span asp-validation-for="Reward" class="text-danger"></span>
+            </div>
+            @* Display all users to select requesting group *@
+            <div>
+                @Html.LabelFor(model => model.requesters)
+                <br />
+                @for (var i = 0; i < Model.requesters.Count; i++)
+                {
+                    @Html.HiddenFor(m => Model.requesters[i].Id)
+                    @Html.CheckBoxFor(m => Model.requesters[i].Checked)
+                    @Model.requesters[i].FirstName
+                    //need space here
+                    @Html.Raw(" ")
+                    @Model.requesters[i].LastName
+                    <br />
+                }
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

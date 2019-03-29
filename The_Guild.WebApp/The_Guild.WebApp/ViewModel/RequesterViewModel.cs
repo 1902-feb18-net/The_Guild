@@ -7,9 +7,8 @@ using The_Guild.WebApp.Models;
 
 namespace The_Guild.WebApp.ViewModel
 {
-    public class UserIndexModel
+    public class RequesterViewModel
     {
-        [Display(Name = "ID")]
         public int Id { get; set; }
 
         [Display(Name = "First Name")]
@@ -18,10 +17,15 @@ namespace The_Guild.WebApp.ViewModel
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Display(Name = "Rank")]
-        public int? RankId { get; set; }
-        public Rank Rank { get; set; }
-        public List<ApiModels.ApiRanks> Ranks { get; set; }
+        public bool Checked;
 
+        public RequesterViewModel() { }
+
+        public RequesterViewModel(Users user)
+        {
+            Id = user.Id;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+        }
     }
 }
