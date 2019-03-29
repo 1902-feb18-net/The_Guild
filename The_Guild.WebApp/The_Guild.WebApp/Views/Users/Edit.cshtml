@@ -1,16 +1,20 @@
 ﻿@model The_Guild.WebApp.Models.Users
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "User Edit";
 }
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Styles/User.css" rel="stylesheet" type="text/css" />
+</head>
 
-<h1>Edit</h1>
-
-<h4>Users</h4>
-<hr />
-<div class="row">
+<h1 class="user-default user-pad">Edit</h1>
+<div class="user-default user-pad">
+    <a asp-action="Index" class="user-button">Back to List</a>
+</div>
+<div class="user-create user-pad">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" class="user-form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
@@ -69,9 +73,7 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

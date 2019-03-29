@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using The_Guild.WebApp.ApiModels;
+using The_Guild.WebApp.Models;
 using The_Guild.WebApp.ViewModel;
 using The_Guild.WebApp.Models;
 
@@ -92,7 +93,8 @@ namespace The_Guild.WebApp.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            return View();
+            Users user = new Users();
+            return View(user);
         }
 
         // POST: Users/Create
@@ -130,9 +132,23 @@ namespace The_Guild.WebApp.Controllers
         }
 
         // GET: Users/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var request = CreateRequestToService(HttpMethod.Get, $"/api/users/{id}");
+            var response = await HttpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                return View("Error", new ErrorViewModel());
+            }
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+            Users user = JsonConvert.DeserializeObject<Users>(jsonString);
+            return View(user);
         }
 
         // POST: Users/Edit/5
@@ -169,9 +185,23 @@ namespace The_Guild.WebApp.Controllers
         }
 
         // GET: Users/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var request = CreateRequestToService(HttpMethod.Get, $"/api/users/{id}");
+            var response = await HttpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                return View("Error", new ErrorViewModel());
+            }
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+            Users user = JsonConvert.DeserializeObject<Users>(jsonString);
+            return View(user);
         }
 
         // POST: Users/Delete/5
