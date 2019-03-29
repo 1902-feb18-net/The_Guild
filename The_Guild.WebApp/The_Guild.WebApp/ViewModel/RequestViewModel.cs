@@ -25,14 +25,15 @@ namespace The_Guild.WebApp.ViewModel
         [Range(0.00, 900000.00)]
         public decimal? Cost { get; set; }
 
-        [Display(Name = "Progress ID")]
-        public int? ProgressId { get; set; }
+        //[Display(Name = "Progress")]
+        //public int? ProgressId { get; set; }
+        //[Display(Name = "Rank")]
+        //public int? RankId { get; set; }
 
-        [Display(Name = "Rank ID")]
-        public int? RankId { get; set; }
-
-        //public Ranks Rank { get; set; } //to display rank name
-        //public Progress Progress { get; set; } //to display progress name
+        [Display(Name = "Rank")]
+        public Ranks Rank { get; set; } //to display rank name
+        [Display(Name = "Progress")]
+        public Progress Progress { get; set; } //to display progress name
 
         //List of all ranks and progresses to choose from.
         //to be displayed as an html select (dropdown list) 
@@ -42,5 +43,17 @@ namespace The_Guild.WebApp.ViewModel
         //list of all? users (want to filter by customer role) to select requesters
         [Display(Name = "Requesting Group Members")]
         public List<RequesterViewModel> requesters { get; set; } = new List<RequesterViewModel>();
+
+
+        public RequestViewModel() { }
+
+        public RequestViewModel(Request req)
+        {
+            Id = req.Id;
+            Descript = req.Descript;
+            Requirements = req.Requirements;
+            Reward = req.Reward;
+            Cost = req.Cost;
+        }
     }
 }

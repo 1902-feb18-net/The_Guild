@@ -34,10 +34,33 @@ namespace The_Guild.WebApp.Controllers
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
-
             var requests = JsonConvert.DeserializeObject<List<Request>>(jsonString);
 
-            return View(requests);
+
+            List<RequestViewModel> viewModels = new List<RequestViewModel>();
+
+            foreach (Request dbRequest in requests)
+            {
+                var progRequest = CreateRequestToService(HttpMethod.Get, $"/api/progress/{dbRequest.ProgressId}");
+                var progResponse = await HttpClient.SendAsync(progRequest);
+                var progJsonString = await progResponse.Content.ReadAsStringAsync();
+                var dbProg = JsonConvert.DeserializeObject<Progress>(progJsonString);
+
+                var rankRequest = CreateRequestToService(HttpMethod.Get, $"/api/rank/{dbRequest.RankId}");
+                var rankResponse = await HttpClient.SendAsync(rankRequest);
+                var rankJsonString = await rankResponse.Content.ReadAsStringAsync();
+                var dbRank = JsonConvert.DeserializeObject<Ranks>(progJsonString);
+
+                RequestViewModel requestViewModel = new RequestViewModel(dbRequest)
+                {
+                    Progress = dbProg,
+                    Rank = dbRank
+                };
+                viewModels.Add(requestViewModel);
+            }
+
+
+            return View(viewModels);
         }
 
         // GET: Request/Details/5
@@ -58,7 +81,24 @@ namespace The_Guild.WebApp.Controllers
 
             var jsonString = await response.Content.ReadAsStringAsync();
             Request dbRequest = JsonConvert.DeserializeObject<Request>(jsonString);
-            return View(dbRequest);
+
+            var progRequest = CreateRequestToService(HttpMethod.Get, $"/api/progress/{dbRequest.ProgressId}");
+            var progResponse = await HttpClient.SendAsync(progRequest);
+            var progJsonString = await progResponse.Content.ReadAsStringAsync();
+            var dbProg = JsonConvert.DeserializeObject<Progress>(progJsonString);
+
+            var rankRequest = CreateRequestToService(HttpMethod.Get, $"/api/rank/{dbRequest.RankId}");
+            var rankResponse = await HttpClient.SendAsync(rankRequest);
+            var rankJsonString = await rankResponse.Content.ReadAsStringAsync();
+            var dbRank = JsonConvert.DeserializeObject<Ranks>(progJsonString);
+
+            RequestViewModel requestViewModel = new RequestViewModel(dbRequest)
+            {
+                Progress = dbProg,
+                Rank = dbRank
+            };
+
+            return View(requestViewModel);
         }
 
         // GET: Request/Create
