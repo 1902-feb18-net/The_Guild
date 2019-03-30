@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using The_Guild.WebApp.ApiModels;
 using The_Guild.WebApp.Models;
+using The_Guild.WebApp.ViewModel;
 
 namespace The_Guild.WebApp.Controllers
 {
@@ -60,7 +61,14 @@ namespace The_Guild.WebApp.Controllers
 
             var jsonString = await response.Content.ReadAsStringAsync();
             Ranks rank = JsonConvert.DeserializeObject<Ranks>(jsonString);
-            return View(rank);
+
+            var request2 = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}/{id}/RankRequirements");
+            var response2 = await HttpClient.SendAsync(request2);
+            var jsonString2 = await response2.Content.ReadAsStringAsync();
+            RankRequirements rankReqs = JsonConvert.DeserializeObject<RankRequirements>(jsonString2);
+            RankViewModel viewModel = new RankViewModel(rank, rankReqs);
+
+            return View(viewModel);
         }
 
         // GET: Rank/Create

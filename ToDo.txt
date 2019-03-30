@@ -13,16 +13,18 @@ Request Create should automatically add the logged in user? (Already has request
 Request edit view/controller needs authorization checks. 
 Request details should show requesting group and, if accepted or later progress, the adventurer party.
 
-Still need a way to display Rank Requirements.
+Still need a way to display user's Rank Requirements.
 Still need Users rankup.
 
-Add logic so that cannot update from later progress backwards (can only progress forward), 
+Add logic so that cannot update from later progress backwards (can only progress forward), <- added but didn't test
 and customer can only update descript/requirements/reward when progress is pending, 
 and receptionist can only update rank when progress is pending, and set progress to declined/approved,
 and adventurer can only update their accepted requests' progress.
-Setting/updating request's rank should auto update request's cost!
 
-Need logic to prevent adding a rankrequirements if one for the current rank already exists.
+Setting/updating request's rank should auto update request's cost! (added but didn't test)
+
+Need logic to prevent adding a rankrequirements if one for the current rank already exists. (added but didn't test)
+
 
 Still need Angular GM stuff.
 
