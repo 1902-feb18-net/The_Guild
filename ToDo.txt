@@ -7,14 +7,13 @@ Admin only should delete.
 
 Need to be able to accept a request, with a way to set up the adventurer party when accepting.
 This should automatically move request's progress from approved to accepted.
+Alternatively, any can accept, adding themself to party, until one has manually changed the progress.
 
 Request Create should automatically add the logged in user? (Already has requesting group selection.)
 Request edit view/controller needs authorization checks. 
 Request details should show requesting group and, if accepted or later progress, the adventurer party.
-Need to be able to update request's party? 
 
-Still need a way to retrieve a user's (customer's) submitted requests and (adventurer's) accepted requests
-As well as Rank Requirements.
+Still need a way to display Rank Requirements.
 Still need Users rankup.
 
 Add logic so that cannot update from later progress backwards (can only progress forward), 
@@ -33,6 +32,7 @@ Dockerfile!
 Non-MVP stuff:
 Sort requests by progress or rank.
 Sort users/adventurers by rank.
+Need to be able to update request's party? 
 
 
 
