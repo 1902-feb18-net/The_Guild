@@ -40,6 +40,6 @@ Stuff to mention in project presentation:
 Anything new?
 Showed adding to db worked. Setting FK ID dependencies broke tests, realized had to call savechanges.
 SonarCloud realized not using camelCase to name some classes. Left connection string after rescaffolding. 
-Realized variable was declared and not being used when it should have been.
+Realized variable was declared and not being used when it should have been. Added title to views.
 DevOps?
 
