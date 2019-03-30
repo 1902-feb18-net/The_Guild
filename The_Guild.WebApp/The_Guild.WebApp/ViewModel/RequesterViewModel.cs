@@ -17,7 +17,7 @@ namespace The_Guild.WebApp.ViewModel
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        public bool Checked;
+        public bool Checked { get; set; }
 
         public RequesterViewModel() { }
 

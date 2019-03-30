@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using The_Guild.WebApp.Models;
 using Xunit;
 
-namespace The_Guild.Test
+namespace The_Guild.Test.ModelTests
 {
     public class UserTest
     {

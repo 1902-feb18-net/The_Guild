@@ -171,7 +171,5 @@ namespace The_Guild.WebApp.Models
         public ApiRanks Rank { get; set; }
         public IEnumerable<ApiRanks> Ranks { get; set; }
 
-        //public IEnumerable<AdventureParty> AdventureParty { get; set; }
-        //public IEnumerable<RequestingParty> RequestingParty { get; set; }
     }
 }
