@@ -116,6 +116,16 @@ namespace The_Guild.WebApp.Controllers
             //get all available customers to choose during submission?
             var usersRequest = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:Users"]);
             var usersResponse = await HttpClient.SendAsync(usersRequest);
+
+            if (!usersResponse.IsSuccessStatusCode)
+            {
+                if (usersResponse.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                return View("Error", new ErrorViewModel());
+            }
+
             var usersJsonString = await usersResponse.Content.ReadAsStringAsync();
             var users = JsonConvert.DeserializeObject<List<Users>>(usersJsonString);
             foreach (Users customer in users)
