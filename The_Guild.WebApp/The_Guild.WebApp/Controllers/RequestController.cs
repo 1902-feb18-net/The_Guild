@@ -54,7 +54,7 @@ namespace The_Guild.WebApp.Controllers
                     var rankJsonString = await rankResponse.Content.ReadAsStringAsync();
                     dbRank = JsonConvert.DeserializeObject<Ranks>(rankJsonString);
                 }
- 
+
                 RequestViewModel requestViewModel = new RequestViewModel(dbRequest)
                 {
                     Progress = dbProg,
