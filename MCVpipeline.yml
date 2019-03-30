@@ -1,0 +1,82 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - The_Guild.WebApp
+
+pool:
+  name: Default
+
+variables:
+  buildConfiguration: Debug
+  solutionDir: The_Guild.WebApp
+
+steps:
+- script: dotnet restore
+  workingDirectory: $(solutionDir)
+  displayName: Restore
+
+- task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 1902-feb18-net_The_Guild
+    organization: 1902-feb18-net
+    projectKey: 1902-feb18-net_The_Guild
+    projectName: The_Guild
+    extraProperties: |
+      sonar.cs.opencover.reportsPaths="$(Build.ArtifactStagingDirectory)/coverage/*"
+      sonar.cs.vstest.reportsPaths="$(Build.ArtifactStagingDirectory)/test/*"
+  displayName: Prepare analysis on SonarCloud
+
+- script: dotnet build 
+    --configuration $(buildConfiguration) 
+    --no-restore
+  workingDirectory: $(solutionDir)
+  displayName: Build
+
+- script: dotnet test **/*Test.csproj
+    --configuration $(buildConfiguration)
+    --logger trx
+    --no-build
+    --results-directory $(Build.ArtifactStagingDirectory)/test
+    /p:CollectCoverage=true
+    /p:CoverletOutputFormat=opencover
+    /p:CoverletOutput='$(Build.ArtifactStagingDirectory)/coverage/'
+    /p:Exclude="[xunit*]*"
+  workingDirectory: $(solutionDir)
+  displayName: Test
+  
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: VSTest
+    testResultsFiles: '*'
+    searchFolder: $(Build.ArtifactStagingDirectory)/test
+  displayName: Publish test results
+
+- task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+  displayName: Run code analysis
+
+- task: SonarSource.sonarcloud.38b27399-a642-40af-bb7d-9971f69712e8.SonarCloudPublish@1
+  displayName: Publish quality gate result
+
+- script: dotnet publish **/*App.csproj
+    --configuration $(buildConfiguration)
+    --no-build
+    --output $(Build.ArtifactStagingDirectory)/publish
+  workingDirectory: $(solutionDir)
+  displayName: Publish
+  
+
+- task: AzureRmWebAppDeployment@4
+  displayName: 'Azure App Service Deploy: project2theGuildMVC'
+  inputs:
+    azureSubscription: 'Free Trial (35bc8ed2-6317-49d4-9955-4f96d2723eb3)'
+    WebAppName: project2theGuildMVC
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/publish'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
+- task: PublishBuildArtifacts@1
+  displayName: Publish artifact
+    

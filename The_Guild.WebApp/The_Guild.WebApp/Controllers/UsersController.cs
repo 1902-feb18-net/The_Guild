@@ -105,8 +105,23 @@ namespace The_Guild.WebApp.Controllers
 
             user.Rank = rank;
 
+            request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Users"]}/{id}/SubmittedRequests");
+            response = await HttpClient.SendAsync(request);
+            jsonString = await response.Content.ReadAsStringAsync();
+            var SubmittedRequests = JsonConvert.DeserializeObject<List<Request>>(jsonString); //might be empty
 
-            return View(user);
+            request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Users"]}/{id}/AcceptedRequests");
+            response = await HttpClient.SendAsync(request);
+            jsonString = await response.Content.ReadAsStringAsync();
+            var AcceptedRequests = JsonConvert.DeserializeObject<List<Request>>(jsonString); //might be empty
+
+            UserViewModel viewModel = new UserViewModel(user)
+            {
+                submittedRequests = SubmittedRequests,
+                acceptedRequests = AcceptedRequests
+            };
+
+            return View(viewModel);
         }
 
         // GET: Users/Create
@@ -148,7 +163,6 @@ namespace The_Guild.WebApp.Controllers
 
                 ApiUsers tUser = new ApiUsers
                 {
-                    Id = users.Id,
                     FirstName = users.FirstName,
                     LastName = users.LastName,
                     Salary = users.Salary,

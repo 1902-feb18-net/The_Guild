@@ -27,11 +27,22 @@
                     <input asp-for="Requirements" class="form-control" />
                     <span asp-validation-for="Requirements" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Reward" class="control-label"></label>
-                    <input asp-for="Reward" class="form-control" />
-                    <span asp-validation-for="Reward" class="text-danger"></span>
-                </div>
+                @if (Model.Reward == null)
+                {
+                    <div class="form-group">
+                        <label asp-for="Reward" class="control-label"></label>
+                        <input asp-for="Reward" class="form-control" placeholder="N/A" />
+                        <span asp-validation-for="Reward" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label asp-for="Reward" class="control-label"></label>
+                        <input asp-for="Reward" class="form-control" />
+                        <span asp-validation-for="Reward" class="text-danger"></span>
+                    </div>
+                }
                 @if (Model.progresses != null)
                 {
                     <div class="form-group">
