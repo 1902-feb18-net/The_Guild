@@ -1,9 +1,10 @@
 ﻿@model The_Guild.WebApp.ViewModel.UserViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "User Details";
 }
 <head>
+    <title>@ViewData["Title"]</title>
     <meta name="viewport" content="width=device-width" />
     <link href="~/Styles/User.css" rel="stylesheet" type="text/css" />
 </head>
@@ -98,7 +99,7 @@
             <p> @Html.Raw("Submitted Requests:") </p>
             foreach (Request subReq in Model.submittedRequests)
             {
-                Html.RenderPartial("PartialRequest", subReq);
+                await Html.RenderPartialAsync("PartialRequest", subReq);
             }
         }
     </div>
@@ -112,7 +113,7 @@
         {
             foreach (Request accReq in Model.acceptedRequests)
             {
-                Html.RenderPartial("PartialRequest", accReq);
+                await Html.RenderPartialAsync("PartialRequest", accReq);
             }
         }
     </div>

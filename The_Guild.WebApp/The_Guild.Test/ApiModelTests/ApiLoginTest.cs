@@ -18,6 +18,12 @@ namespace The_Guild.Test.ApiModelTests
             Assert.Throws<ArgumentException>(() => _login.Username = arg);
         }
 
+        [Fact]
+        public void Test_UsernameNull()
+        {
+            Assert.Throws<ArgumentNullException>(() => _login.Username = null);
+        }
+
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
@@ -25,6 +31,12 @@ namespace The_Guild.Test.ApiModelTests
         public void Test_Password(string arg)
         {
             Assert.Throws<ArgumentException>(() => _login.Password = arg);
+        }
+
+        [Fact]
+        public void Test_PasswordNull()
+        {
+            Assert.Throws<ArgumentNullException>(() => _login.Password = null);
         }
 
         [Theory]

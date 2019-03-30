@@ -1,12 +1,12 @@
 ﻿using System;
-using The_Guild.WebApp.Models;
+using The_Guild.WebApp.ViewModel;
 using Xunit;
 
-namespace The_Guild.Test.ModelTests
+namespace The_Guild.Test.ViewModelTests
 {
-    public class UserTest
+    public class UserViewModelTest
     {
-        public readonly Users user = new Users();
+        public readonly UserViewModel user = new UserViewModel();
 
         [Theory]
         [InlineData("")]
@@ -89,6 +89,7 @@ namespace The_Guild.Test.ModelTests
         }
 
         [Theory]
+        [InlineData(-100)]
         [InlineData(-1)]
         public void Test_Salary(decimal arg)
         {
