@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using The_Guild.WebApp.ApiModels;
 
 namespace The_Guild.WebApp.Models
@@ -23,44 +21,150 @@ namespace The_Guild.WebApp.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name ="First Name")]
-        public string FirstName {
+        [Display(Name = "First Name")]
+        public string FirstName
+        {
             get => _first;
             set
             {
                 Guard.Against.NullOrWhiteSpace(value, nameof(value));
                 _first = value;
             }
-
         }
-        
+
         [Required]
-        [Display(Name ="Last Name")]
-        public string LastName { get; set; }
+        [Display(Name = "Last Name")]
+        public string LastName
+        {
+            get => _last;
+            set
+            {
+                Guard.Against.NullOrWhiteSpace(value, nameof(value));
+                _last = value;
+            }
+        }
 
 
-        [Range(0,900000)]
-        public decimal? Salary { get; set; }
+        [Range(0, 900000)]
+        public decimal? Salary
+        {
+            get => _sal;
+            set
+            {
+                if (CheckConstraints.NonNegativeDecimal(value))
+                {
+                    _sal = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
 
-        
+
         [Range(0, 40)]
-        public int? Strength { get; set; }
-                
+        public int? Strength
+        {
+            get => _str;
+            set
+            {
+                if (CheckConstraints.ValidInt(value))
+                {
+                    _str = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         [Range(0, 40)]
-        public int? Dex { get; set; }
-                
+        public int? Dex
+        {
+            get => _dex;
+            set
+            {
+                if (CheckConstraints.ValidInt(value))
+                {
+                    _dex = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         [Range(0, 40)]
-        public int? Wisdom { get; set; }
-                
+        public int? Wisdom
+        {
+            get => _wis;
+            set
+            {
+                if (CheckConstraints.ValidInt(value))
+                {
+                    _wis = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         [Range(0, 40)]
-        public int? Intelligence { get; set; }
-                
+        public int? Intelligence
+        {
+            get => _int;
+            set
+            {
+                if (CheckConstraints.ValidInt(value))
+                {
+                    _int = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         [Range(0, 40)]
-        public int? Charisma { get; set; }
-                
+        public int? Charisma
+        {
+            get => _cha;
+            set
+            {
+                if (CheckConstraints.ValidInt(value))
+                {
+                    _cha = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         [Range(0, 40)]
-        public int? Constitution { get; set; }
-             
+        public int? Constitution
+        {
+            get => _con;
+            set
+            {
+                if (CheckConstraints.ValidInt(value))
+                {
+                    _con = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         [Range(0, 900000)]
         [Display(Name = "Rank")]
         public int? RankId { get; set; }
