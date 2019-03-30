@@ -98,7 +98,7 @@
             <p> @Html.Raw("Submitted Requests:") </p>
             foreach (Request subReq in Model.submittedRequests)
             {
-                Html.RenderPartial("PartialRequest", subReq);
+                await Html.RenderPartialAsync("PartialRequest", subReq);
             }
         }
     </div>
@@ -112,7 +112,7 @@
         {
             foreach (Request accReq in Model.acceptedRequests)
             {
-                Html.RenderPartial("PartialRequest", accReq);
+                await Html.RenderPartialAsync("PartialRequest", accReq);
             }
         }
     </div>
