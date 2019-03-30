@@ -91,10 +91,11 @@
     <div>
         @if (Model.submittedRequests == null || Model.submittedRequests.Count() == 0)
         {
-            Html.Raw("No submitted requests");
+            <p> @Html.Raw("No submitted requests") </p>
         }
         else
         {
+            <p> @Html.Raw("Submitted Requests:") </p>
             foreach (Request subReq in Model.submittedRequests)
             {
                 Html.RenderPartial("PartialRequest", subReq);
@@ -105,7 +106,7 @@
     <div>
         @if (Model.acceptedRequests == null || Model.acceptedRequests.Count() == 0)
         {
-            Html.Raw("No accepted requests");
+        <p> @Html.Raw("No accepted requests") </p>
         }
         else
         {

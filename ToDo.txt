@@ -27,15 +27,19 @@ Setting/updating request's rank should auto update request's cost!
 
 Still need Angular GM stuff.
 
+Dockerfile!
 
 Non-MVP stuff:
 Sort requests by progress or rank.
 Sort users/adventurers by rank.
 
 
+
+Stuff to mention in project presentation:
 Anything new 
 Tests haven't broken. Showed adding to db worked. Setting FK ID dependencies broke test, 
 realized had to call savechanges.
 SonarCloud realized not using camelCase to name some classes. Left connection string after rescaffolding. 
 Realized variable was declared and not being used when it should have been.
-DevOps 
+DevOps?
+
