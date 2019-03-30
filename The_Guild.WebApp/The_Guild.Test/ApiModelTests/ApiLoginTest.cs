@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using The_Guild.WebApp.ApiModels;
 
-namespace The_Guild.Test
+namespace The_Guild.Test.ApiModelTests
 {
     public class ApiLoginTest
     {

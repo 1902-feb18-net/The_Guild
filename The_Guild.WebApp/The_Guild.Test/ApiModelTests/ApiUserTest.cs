@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using The_Guild.WebApp.Models;
 using Xunit;
+using The_Guild.WebApp.ApiModels;
 
-namespace The_Guild.Test.ModelTests
+namespace The_Guild.Test.ApiModelTests
 {
-    public class UserTest
+    public class ApiUserTest
     {
-        public readonly Users user = new Users();
-
+        private readonly ApiUsers user = new ApiUsers();
         [Theory]
         [InlineData("")]
         [InlineData(" ")]

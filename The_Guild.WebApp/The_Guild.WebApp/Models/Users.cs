@@ -36,31 +36,140 @@ namespace The_Guild.WebApp.Models
         
         [Required]
         [Display(Name ="Last Name")]
-        public string LastName { get; set; }
+        public string LastName {
+            get => _last;
+            set
+            {
+                Guard.Against.NullOrWhiteSpace(value, nameof(value));
+                _last = value;
+            }
+        }
 
 
-        [Range(0,900000)]
-        public decimal? Salary { get; set; }
+        [Range(0, 900000)]
+        public decimal? Salary
+        {
+            get => _sal;
+            set
+            {
+                if( !(value < 0) && value <= 900000)
+                {
+                    _sal = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
 
         
         [Range(0, 40)]
-        public int? Strength { get; set; }
-                
+        public int? Strength
+        {
+            get => _str;
+            set
+            {
+                if (!(value < 0) && value <= 40)
+                {
+                    _str = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         [Range(0, 40)]
-        public int? Dex { get; set; }
-                
+        public int? Dex
+        {
+            get => _dex;
+            set
+            {
+                if (!(value < 0) && value <= 40)
+                {
+                    _dex = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
         [Range(0, 40)]
-        public int? Wisdom { get; set; }
-                
+        public int? Wisdom
+        {
+            get => _wis;
+            set
+            {
+                if (!(value < 0) && value <= 40)
+                {
+                    _wis = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+
         [Range(0, 40)]
-        public int? Intelligence { get; set; }
-                
+        public int? Intelligence
+        {
+            get => _int;
+            set
+            {
+                if (!(value < 0) && value <= 40)
+                {
+                    _int = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+
         [Range(0, 40)]
-        public int? Charisma { get; set; }
-                
+        public int? Charisma
+        {
+            get => _cha;
+            set
+            {
+                if (!(value < 0) && value <= 40)
+                {
+                    _cha = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+
         [Range(0, 40)]
-        public int? Constitution { get; set; }
-             
+        public int? Constitution
+        {
+            get => _con;
+            set
+            {
+                if (!(value < 0) && value <= 40)
+                {
+                    _con = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+
         [Range(0, 900000)]
         [Display(Name = "Rank")]
         public int? RankId { get; set; }
