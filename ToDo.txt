@@ -3,13 +3,12 @@ Across all Views: All nullable values should show something like N/A instead of 
 
 Users edit should only be accessible by that user logged in,
 and should not display stats+salary if logged in user's role is not an adventurer.
-Admin only shoiuld delete.
+Admin only should delete.
 
 Need to be able to accept a request, with a way to set up the adventurer party when accepting.
 This should automatically move request's progress from approved to accepted.
 
 Request Create should automatically add the logged in user? (Already has requesting group selection.)
-Request edit should show their ID, but not edit for it. 
 Request edit view/controller needs authorization checks. 
 Request details should show requesting group and, if accepted or later progress, the adventurer party.
 Need to be able to update request's party? 
@@ -24,10 +23,12 @@ and receptionist can only update rank when progress is pending, and set progress
 and adventurer can only update their accepted requests' progress.
 Setting/updating request's rank should auto update request's cost!
 
+Need logic to prevent adding a rankrequirements if one for the current rank already exists.
 
 Still need Angular GM stuff.
 
 Dockerfile!
+
 
 Non-MVP stuff:
 Sort requests by progress or rank.
@@ -36,9 +37,8 @@ Sort users/adventurers by rank.
 
 
 Stuff to mention in project presentation:
-Anything new 
-Tests haven't broken. Showed adding to db worked. Setting FK ID dependencies broke test, 
-realized had to call savechanges.
+Anything new?
+Showed adding to db worked. Setting FK ID dependencies broke tests, realized had to call savechanges.
 SonarCloud realized not using camelCase to name some classes. Left connection string after rescaffolding. 
 Realized variable was declared and not being used when it should have been.
 DevOps?
