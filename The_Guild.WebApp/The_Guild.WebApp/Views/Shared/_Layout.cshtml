@@ -1,9 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    var account = ViewData["accountDetails"] as The_Guild.WebApp.ApiModels.ApiAccountDetails;
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - The Guild</title>
+    @{ 
+        ViewData["Title"] = "The Guild";
+    }
+
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -14,7 +21,7 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
-              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE="/>
+              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -27,11 +34,25 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" >
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    @if(account is null)
+                    {
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <form class="form-inline" asp-controller="Account" asp-action="Logout">
+                            <span class="navbar-text mr-sm-2">
+                                @account.Username
+                            </span>
+                            <button class="btn btn-outline-info" type="submit">Logout</button>
+                        </form>
+                    }
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
                         </li>
@@ -46,16 +67,15 @@
             </div>
         </nav>
     </header>
-    @*<div class="container">
-        @*<partial name="_CookieConsentPartial" />
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-    </div>*@
+    </div>
 
     @* The @renderbody() is needed to render razor page items not enclosed by an item type and will cause errors if not included
         the above part is commented out because we dont care about the cookies permission and asthetic reasons*@
-    @RenderBody()
+    @*RenderBody()*@
     <footer class="border-top footer text-muted common-footer">
         <div class="container common-footer">
             &copy; 2019 - The Guild
