@@ -1,4 +1,4 @@
-﻿@model The_Guild.WebApp.Models.Users
+﻿@model The_Guild.WebApp.ViewModel.UserViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -12,79 +12,108 @@
     <h1 class="user-pad">Details</h1>
     <div class="user-pad">
         <span class="user-button">
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
-        </span> 
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+        </span>
         <a asp-action="Index" class="user-button">Back to List</a>
     </div>
 
     <div class="user-pad user-pad-ri">
         <dl class="row user-form">
-            <dt class = "col-sm-2">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Id)
             </dt>
-            <dd class = "col-sm-10 user-center">
+            <dd class="col-sm-10 user-center">
                 @Html.DisplayFor(model => model.Id)
             </dd>
-            <dt class = "col-sm-2">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.FirstName)
             </dt>
-            <dd class = "col-sm-10 user-center">
+            <dd class="col-sm-10 user-center">
                 @Html.DisplayFor(model => model.FirstName)
             </dd>
-            <dt class = "col-sm-2">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.LastName)
             </dt>
-            <dd class = "col-sm-10 user-center">
+            <dd class="col-sm-10 user-center">
                 @Html.DisplayFor(model => model.LastName)
             </dd>
-            <dt class = "col-sm-2">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Salary)
             </dt>
-            <dd class = "col-sm-10 user-center">
+            <dd class="col-sm-10 user-center">
                 @Html.DisplayFor(model => model.Salary)
             </dd>
-            <dt class = "col-sm-2">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Strength)
             </dt>
-            <dd class = "col-sm-10 user-center">
+            <dd class="col-sm-10 user-center">
                 @Html.DisplayFor(model => model.Strength)
             </dd>
-            <dt class = "col-sm-2">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Dex)
             </dt>
-            <dd class = "col-sm-10 user-center">
+            <dd class="col-sm-10 user-center">
                 @Html.DisplayFor(model => model.Dex)
             </dd>
-            <dt class = "col-sm-2">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Wisdom)
             </dt>
-            <dd class = "col-sm-10 user-center">
+            <dd class="col-sm-10 user-center">
                 @Html.DisplayFor(model => model.Wisdom)
             </dd>
-            <dt class = "col-sm-2">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Intelligence)
             </dt>
-            <dd class = "col-sm-10 user-center">
+            <dd class="col-sm-10 user-center">
                 @Html.DisplayFor(model => model.Intelligence)
             </dd>
-            <dt class = "col-sm-2">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Charisma)
             </dt>
-            <dd class = "col-sm-10 user-center">
+            <dd class="col-sm-10 user-center">
                 @Html.DisplayFor(model => model.Charisma)
             </dd>
-            <dt class = "col-sm-2">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Constitution)
             </dt>
-            <dd class = "col-sm-10 user-center">
+            <dd class="col-sm-10 user-center">
                 @Html.DisplayFor(model => model.Constitution)
             </dd>
-            <dt class = "col-sm-2">
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.RankId)
             </dt>
-            <dd class = "col-sm-10 user-center">
+            <dd class="col-sm-10 user-center">
                 @Html.DisplayFor(model => model.Rank.Name)
             </dd>
         </dl>
     </div>
+
+    <div>
+        @if (Model.submittedRequests == null || Model.submittedRequests.Count() == 0)
+        {
+            Html.Raw("No submitted requests");
+        }
+        else
+        {
+            foreach (Request subReq in Model.submittedRequests)
+            {
+                Html.RenderPartial("PartialRequest", subReq);
+            }
+        }
+    </div>
+
+    <div>
+        @if (Model.acceptedRequests == null || Model.acceptedRequests.Count() == 0)
+        {
+            Html.Raw("No accepted requests");
+        }
+        else
+        {
+            foreach (Request accReq in Model.acceptedRequests)
+            {
+                Html.RenderPartial("PartialRequest", accReq);
+            }
+        }
+    </div>
+
 </body>
