@@ -35,6 +35,10 @@
     padding-right: 40%;
 }
 
+.user-pad-sm {
+    padding-left: 5%;
+}
+
 .user-table-header {
     background-color: dimgray;
     border: 10px solid transparent;

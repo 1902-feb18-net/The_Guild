@@ -148,7 +148,6 @@ namespace The_Guild.WebApp.Controllers
 
                 ApiUsers tUser = new ApiUsers
                 {
-                    Id = users.Id,
                     FirstName = users.FirstName,
                     LastName = users.LastName,
                     Salary = users.Salary,

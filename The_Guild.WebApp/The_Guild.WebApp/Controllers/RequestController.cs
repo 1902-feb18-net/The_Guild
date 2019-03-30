@@ -41,7 +41,7 @@ namespace The_Guild.WebApp.Controllers
 
             foreach (Request dbRequest in requests)
             {
-                var progRequest = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Request"]}/{dbRequest.ProgressId}");
+                var progRequest = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Progress"]}/{dbRequest.ProgressId}");
                 var progResponse = await HttpClient.SendAsync(progRequest);
                 var progJsonString = await progResponse.Content.ReadAsStringAsync();
                 var dbProg = JsonConvert.DeserializeObject<Progress>(progJsonString);
@@ -49,7 +49,7 @@ namespace The_Guild.WebApp.Controllers
                 var rankRequest = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}/{dbRequest.RankId}");
                 var rankResponse = await HttpClient.SendAsync(rankRequest);
                 var rankJsonString = await rankResponse.Content.ReadAsStringAsync();
-                var dbRank = JsonConvert.DeserializeObject<Ranks>(progJsonString);
+                var dbRank = JsonConvert.DeserializeObject<Ranks>(rankJsonString);
 
                 RequestViewModel requestViewModel = new RequestViewModel(dbRequest)
                 {

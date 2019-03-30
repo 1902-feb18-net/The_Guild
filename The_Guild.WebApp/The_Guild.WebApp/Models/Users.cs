@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,11 +10,29 @@ namespace The_Guild.WebApp.Models
 {
     public class Users
     {
+        private string _first,
+                       _last;
+        private decimal? _sal;
+        private int? _str,
+                     _dex,
+                     _wis,
+                     _int,
+                     _cha,
+                     _con;
+
         public int Id { get; set; }
 
         [Required]
         [Display(Name ="First Name")]
-        public string FirstName { get; set; }
+        public string FirstName {
+            get => _first;
+            set
+            {
+                Guard.Against.NullOrWhiteSpace(value, nameof(value));
+                _first = value;
+            }
+
+        }
         
         [Required]
         [Display(Name ="Last Name")]
