@@ -1,101 +1,78 @@
 ﻿@model The_Guild.WebApp.Models.Request
 
-
-
-<body class="user-bg1">
-    <table class="table">
-        <thead>
-            <tr class="user-table-header">
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Descript)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Requirements)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Reward)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Progress)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Rank)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Cost)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr class="user-table-row">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Descript)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Requirements)
-                    </td>
-                    @if (item.Reward != null)
-                    {
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Reward)
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            @Html.Raw("N/A")
-                        </td>
-                    }
-                    @if (item.Progress != null && item.Progress.Nam != null)
-                    {
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Progress.Nam)
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            @Html.Raw("N/A")
-                        </td>
-                    }
-                    @if (item.Rank != null && item.Rank.Name != null)
-                    {
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Rank.Name)
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            @Html.Raw("TBD")
-                        </td>
-                    }
-                    @if (item.Cost != null)
-                    {
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Cost)
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            @Html.Raw("TBD")
-                        </td>
-                    }
-                    <td>
-                        | @Html.ActionLink("Details", "Details", new { id = item.Id })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</body>
+<div class="user-button">
+@Html.ActionLink("More Details", "Details", "Request", new { id = Model.Id })
+</div>
+<div class="user-pad user-pad-ri">
+    <dl class="row user-form">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10 user-center">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Descript)
+        </dt>
+        <dd class="col-sm-10 user-center">
+            @Html.DisplayFor(model => model.Descript)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Requirements)
+        </dt>
+        <dd class="col-sm-10 user-center">
+            @Html.DisplayFor(model => model.Requirements)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reward)
+        </dt>
+        @if (Model.Reward != null)
+        {
+            <dd class="col-sm-10 user-center">
+                @Html.DisplayFor(model => model.Reward)
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10 user-center">
+                @Html.Raw("N/A")
+            </dd>
+        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProgressId)
+        </dt>
+        <dd class="col-sm-10 user-center">
+            @Html.DisplayFor(model => model.ProgressId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RankId)
+        </dt>
+        @if (Model.RankId != null)
+        {
+            <dd class="col-sm-10 user-center">
+                @Html.DisplayFor(model => model.RankId)
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10 user-center">
+                @Html.Raw("TBD")
+            </dd>
+        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cost)
+        </dt>
+        @if (Model.Cost != null)
+        {
+            <dd class="col-sm-10 user-center">
+                @Html.DisplayFor(model => model.Cost)
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10 user-center">
+                @Html.Raw("TBD")
+            </dd>
+        }
+    </dl>
+</div>
