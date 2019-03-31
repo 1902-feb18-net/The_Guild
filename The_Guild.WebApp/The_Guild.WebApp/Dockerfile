@@ -13,6 +13,10 @@ RUN dotnet test
 
 RUN dotnet publish --no-restore -c Release -o out
 
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2 AS runtime
+
+WORKDIR /app
+
 COPY --from=build /app/out ./
 
 ENTRYPOINT [ "dotnet", "The_Guild.WebApp.dll" ]
