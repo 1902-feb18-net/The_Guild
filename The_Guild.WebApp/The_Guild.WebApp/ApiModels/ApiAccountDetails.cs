@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace The_Guild.WebApp.ApiModels
 {
-    public class ApiRegister
+    public class ApiAccountDetails
     {
         public string Username { get; set; }
-        public string Password { get; set; }
-        
-        
-
+        public IEnumerable<string> Roles { get; set; }
     }
 }

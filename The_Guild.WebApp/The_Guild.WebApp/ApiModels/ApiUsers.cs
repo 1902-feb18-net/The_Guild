@@ -20,7 +20,6 @@ namespace The_Guild.WebApp.ApiModels
 
         public int Id { get; set; }
 
-
         public string FirstName
         {
             get => _first;
@@ -159,7 +158,6 @@ namespace The_Guild.WebApp.ApiModels
                 }
             }
         }
-
         public int? RankId { get; set; }
     }
 }

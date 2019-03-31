@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using The_Guild.WebApp.ApiModels;
 
 namespace The_Guild.WebApp.Controllers
 {
@@ -17,6 +18,8 @@ namespace The_Guild.WebApp.Controllers
         public IConfiguration Configuration { get; }
         public Uri ServiceUrl { get; }
         public string ServiceCookieName { get; }
+
+        public ApiAccountDetails Account { get; set; }
 
         public AServiceController(HttpClient httpClient, IConfiguration configuration)
         {
