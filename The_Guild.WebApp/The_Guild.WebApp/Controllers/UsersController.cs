@@ -70,8 +70,12 @@ namespace The_Guild.WebApp.Controllers
         }
 
         // GET: Users/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int? id)
         {
+
+            ApiAccountDetails dets = (ApiAccountDetails)ViewData["accountDetails"];
+            if(id == null)
+                id = dets.UserId;
             var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Users"]}/{id}");
             var response = await HttpClient.SendAsync(request);
 

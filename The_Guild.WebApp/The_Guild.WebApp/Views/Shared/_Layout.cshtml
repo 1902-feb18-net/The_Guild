@@ -46,8 +46,9 @@
                     else
                     {
                         <form class="form-inline" asp-controller="Account" asp-action="Logout">
-                            <span class="navbar-text mr-sm-2">
-                                @account.Username
+                            <span class="nav-item">
+                                @*@Html.ActionLink(account.Username, "Details", "Users", account.UserId)*@
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Details">@account.Username</a>
                             </span>
                             <button class="btn btn-outline-info" type="submit">Logout</button>
                             

@@ -32,7 +32,12 @@ namespace The_Guild.WebApp.Filters
                 HttpRequestMessage request = controller.CreateRequestToService(
                     HttpMethod.Get, _configuration["ServiceEndpoints:AccountDetails"]);
 
+                HttpRequestMessage request2 = controller.CreateRequestToService(
+                    HttpMethod.Get, _configuration["ServiceEndpoints:Users"]);
+
                 HttpResponseMessage response = await controller.HttpClient.SendAsync(request);
+
+                HttpResponseMessage response2 = await controller.HttpClient.SendAsync(request2);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -42,10 +47,27 @@ namespace The_Guild.WebApp.Filters
                 }
                 else
                 {
-                    var jsonString = await response.Content.ReadAsStringAsync();
-                    ApiAccountDetails details = JsonConvert.DeserializeObject<ApiAccountDetails>(jsonString);
-                    controller.ViewData["accountDetails"] = details;
-                    controller.Account = details;
+                    if (!response2.IsSuccessStatusCode)
+                    {
+
+                    }
+                    else
+                    {
+                        var jsonString = await response.Content.ReadAsStringAsync();
+                        var jsonString2 = await response2.Content.ReadAsStringAsync();
+                        ApiAccountDetails details = JsonConvert.DeserializeObject<ApiAccountDetails>(jsonString);
+                        List<ApiUsers> users = JsonConvert.DeserializeObject<List<ApiUsers>>(jsonString2);
+                        foreach(ApiUsers user in users)
+                        {
+                            if(user.UserName == details.Username)
+                            {
+                                details.UserId = user.Id;
+                            }
+                        }
+                        controller.ViewData["accountDetails"] = details;
+                        //controller.TempData["accountDetails"] = details.ToString();
+                        controller.Account = details;
+                    }
                 }
             }
 
