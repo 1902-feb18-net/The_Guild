@@ -1,4 +1,4 @@
-﻿@model The_Guild.WebApp.Models.Ranks
+﻿@model The_Guild.WebApp.ViewModel.RankViewModel
 
 @{
     ViewData["Title"] = "Rank Details";
@@ -13,31 +13,67 @@
     <h1 class="user-pad">Details</h1>
     <div class="user-pad">
         <span class="user-button">
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Rank.Id })
         </span>
         <a asp-action="Index" class="user-button">Back to List</a>
     </div>
     <div class="user-pad user-pad-ri">
         <dl class="row user-form">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.Rank.Id)
             </dt>
             <dd class="col-sm-10 user-center">
-                @Html.DisplayFor(model => model.Id)
+                @Html.DisplayFor(model => model.Rank.Id)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Rank.Name)
             </dt>
             <dd class="col-sm-10 user-center">
-                @Html.DisplayFor(model => model.Name)
+                @Html.DisplayFor(model => model.Rank.Name)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Fee)
+                @Html.DisplayNameFor(model => model.Rank.Fee)
             </dt>
             <dd class="col-sm-10 user-center">
-                @Html.DisplayFor(model => model.Fee)
+                @Html.DisplayFor(model => model.Rank.Fee)
             </dd>
         </dl>
     </div>
+
+    @if (Model.RankRequirements != null)
+    {
+    <div class="user-pad user-pad-ri">
+        <dl class="row user-form">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.RankRequirements.Id)
+            </dt>
+            <dd class="col-sm-10 user-center">
+                @Html.DisplayFor(model => model.RankRequirements.Id)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.RankRequirements.NextRankId)
+            </dt>
+            <dd class="col-sm-10 user-center">
+                @Html.DisplayFor(model => model.RankRequirements.NextRankId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.RankRequirements.NumberRequests)
+            </dt>
+            <dd class="col-sm-10 user-center">
+                @Html.DisplayFor(model => model.RankRequirements.NumberRequests)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.RankRequirements.MinTotalStats)
+            </dt>
+            <dd class="col-sm-10 user-center">
+                @Html.DisplayFor(model => model.RankRequirements.MinTotalStats)
+            </dd>
+        </dl>
+    </div>
+    }
+    else
+    {
+        <p>@Html.Raw("Rank has no next rank!")</p>
+    }
 </body>
 

@@ -11,6 +11,7 @@ namespace The_Guild.WebApp.Models
         private string _first,
                        _last,
                        _user;
+      
         private decimal? _sal;
         private int? _str,
                      _dex,
@@ -63,7 +64,7 @@ namespace The_Guild.WebApp.Models
             get => _sal;
             set
             {
-                if (CheckConstraints.NonNegativeDecimal(value))
+                if (CheckConstraints.ValidDecimal(value, 0, 900000))
                 {
                     _sal = value;
                 }

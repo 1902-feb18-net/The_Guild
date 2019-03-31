@@ -90,6 +90,7 @@ namespace The_Guild.Test.ModelTests
 
         [Theory]
         [InlineData(-1)]
+        [InlineData(1000000)]
         public void Test_Salary(decimal arg)
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => user.Salary = arg);
