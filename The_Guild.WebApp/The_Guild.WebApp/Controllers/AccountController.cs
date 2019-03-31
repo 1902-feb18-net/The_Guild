@@ -121,6 +121,9 @@ namespace The_Guild.WebApp.Controllers
             HttpRequestMessage request = CreateRequestToService(HttpMethod.Post,
                 Configuration["ServiceEndpoints:AccountRegister"], register);
 
+            HttpRequestMessage request2 = CreateRequestToService(HttpMethod.Post,
+                Configuration["ServiceEndpoints:Users/Create"], register);
+
             HttpResponseMessage response;
             try
             {
