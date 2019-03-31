@@ -8,7 +8,7 @@ namespace The_Guild.WebApp.Models
 {
     public class Ranks
     {
-        [Display(Name = "ID")]
+        [Display(Name = "Rank ID")]
         public int Id { get; set; }
 
         [Required]
