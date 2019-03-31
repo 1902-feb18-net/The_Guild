@@ -50,13 +50,13 @@
                                 @account.Username
                             </span>
                             <button class="btn btn-outline-info" type="submit">Logout</button>
-                            <div class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Details/@account.UserId">User Details</a>
-                            </div>
+                            
                         </form>
                     }
                     <ul class="navbar-nav flex-grow-1">
-                        
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Request" asp-action="Index">Requests</a>
                         </li>
