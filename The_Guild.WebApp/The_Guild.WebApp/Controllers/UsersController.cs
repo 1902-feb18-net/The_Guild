@@ -257,13 +257,32 @@ namespace The_Guild.WebApp.Controllers
         {
             try
             {
+                HttpRequestMessage request;
+                HttpResponseMessage response;
+                string jsonString;
+                List<ApiRanks> ranks;
+
                 if (!ModelState.IsValid)
                 {
+                    request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}");
+                    response = await HttpClient.SendAsync(request);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        if (response.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            return RedirectToAction("Login", "Account");
+                        }
+                        return View("Error", new ErrorViewModel());
+                    }
+
+                    jsonString = await response.Content.ReadAsStringAsync();
+                    ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
                     return View(users);
                 }
-                var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Users"]}/{id}", users);
+                request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Users"]}/{id}", users);
 
-                var response = await HttpClient.SendAsync(request);
+                response = await HttpClient.SendAsync(request);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -279,6 +298,22 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
+
+                var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}");
+                var response = await HttpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                    return View("Error", new ErrorViewModel());
+                }
+
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
+
                 return View(users);
             }
         }
