@@ -26,7 +26,7 @@ Setting/updating request's rank should auto update request's cost! (added logic 
 
 Still need Angular GM stuff.
 
-Dockerfile!
+Fix ranks disappearing when there is an error, thereby causing another error (select list's items is null)
 
 
 Non-MVP stuff:

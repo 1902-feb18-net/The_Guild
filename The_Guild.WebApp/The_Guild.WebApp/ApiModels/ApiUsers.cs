@@ -49,7 +49,7 @@ namespace The_Guild.WebApp.ApiModels
             get => _sal;
             set
             {
-                if (!(value < 0) && value <= 900000)
+                if (CheckConstraints.ValidDecimal(value, 0, 900000))
                 {
                     _sal = value;
                 }
@@ -66,7 +66,7 @@ namespace The_Guild.WebApp.ApiModels
             get => _str;
             set
             {
-                if (!(value < 0) && value <= 40)
+                if (CheckConstraints.ValidInt(value))
                 {
                     _str = value;
                 }
@@ -82,7 +82,7 @@ namespace The_Guild.WebApp.ApiModels
             get => _dex;
             set
             {
-                if (!(value < 0) && value <= 40)
+                if (CheckConstraints.ValidInt(value))
                 {
                     _dex = value;
                 }
@@ -98,7 +98,7 @@ namespace The_Guild.WebApp.ApiModels
             get => _wis;
             set
             {
-                if (!(value < 0) && value <= 40)
+                if (CheckConstraints.ValidInt(value))
                 {
                     _wis = value;
                 }
@@ -115,7 +115,7 @@ namespace The_Guild.WebApp.ApiModels
             get => _int;
             set
             {
-                if (!(value < 0) && value <= 40)
+                if (CheckConstraints.ValidInt(value))
                 {
                     _int = value;
                 }
@@ -132,7 +132,7 @@ namespace The_Guild.WebApp.ApiModels
             get => _cha;
             set
             {
-                if (!(value < 0) && value <= 40)
+                if (CheckConstraints.ValidInt(value))
                 {
                     _cha = value;
                 }
@@ -149,7 +149,7 @@ namespace The_Guild.WebApp.ApiModels
             get => _con;
             set
             {
-                if (!(value < 0) && value <= 40)
+                if (CheckConstraints.ValidInt(value))
                 {
                     _con = value;
                 }
