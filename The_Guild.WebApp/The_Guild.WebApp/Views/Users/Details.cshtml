@@ -16,6 +16,52 @@
             @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
         </span>
         <a asp-action="Index" class="user-button">Back to List</a>
+        <form asp-action="Edit" class="user-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="FirstName" type="hidden" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="LastName" type="hidden" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Salary" type="hidden" class="form-control" />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Strength" type="hidden" class="form-control" />
+                <span asp-validation-for="Strength" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Dex" type="hidden" class="form-control" />
+                <span asp-validation-for="Dex" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Wisdom" type="hidden" class="form-control" />
+                <span asp-validation-for="Wisdom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Intelligence" type="hidden" class="form-control" />
+                <span asp-validation-for="Intelligence" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Charisma" type="hidden" class="form-control" />
+                <span asp-validation-for="Charisma" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Constitution" type="hidden" class="form-control" />
+                <span asp-validation-for="Constitution" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RankId" type="hidden" class="control-label"></label>
+                <select asp-for="RankId" asp-items="@(new SelectList(Model.Ranks, "Id", "Name"))" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Rank Up" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
 
     <div class="user-pad user-pad-ri">
@@ -92,11 +138,11 @@
     <div>
         @if (Model.submittedRequests == null || Model.submittedRequests.Count() == 0)
         {
-            <p> @Html.Raw("No submitted requests") </p>
+            <h3 class="text-shadow"> @Html.Raw("No Submitted Requests") </h3>
         }
         else
         {
-            <p> @Html.Raw("Submitted Requests:") </p>
+            <h3 class="text-shadow"> @Html.Raw("Submitted Requests:") </h3>
             foreach (Request subReq in Model.submittedRequests)
             {
                 await Html.RenderPartialAsync("PartialRequest", subReq);
@@ -107,10 +153,11 @@
     <div>
         @if (Model.acceptedRequests == null || Model.acceptedRequests.Count() == 0)
         {
-        <p> @Html.Raw("No accepted requests") </p>
+        <h3 class="text-shadow"> @Html.Raw("No Accepted Requests") </h3>
         }
         else
         {
+            <h3 class="text-shadow">@Html.Raw("Accepted Requests")</h3>
             foreach (Request accReq in Model.acceptedRequests)
             {
                 await Html.RenderPartialAsync("PartialRequest", accReq);

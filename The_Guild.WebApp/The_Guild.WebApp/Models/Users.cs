@@ -11,6 +11,7 @@ namespace The_Guild.WebApp.Models
         private string _first,
                        _last,
                        _user;
+      
         private decimal? _sal;
         private int? _str,
                      _dex,
