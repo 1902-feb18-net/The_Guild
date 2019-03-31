@@ -10,6 +10,7 @@ namespace The_Guild.WebApp.ApiModels
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string UserName { get; set; }
         public decimal? Salary { get; set; }
         public int? Strength { get; set; }
         public int? Dex { get; set; }

@@ -12,7 +12,8 @@ namespace The_Guild.WebApp.ViewModel
     public class UserViewModel
     {
         private string _first,
-                      _last;
+                      _last,
+                      _user;
         private decimal? _sal;
         private int? _str,
                      _dex,
@@ -47,6 +48,17 @@ namespace The_Guild.WebApp.ViewModel
             }
         }
 
+        [Required]
+        [Display(Name = "Username")]
+        public string user
+        {
+            get => _user;
+            set
+            {
+                Guard.Against.NullOrWhiteSpace(value, nameof(value));
+                _user = value;
+            }
+        }
 
         [Range(0, 900000)]
         public decimal? Salary

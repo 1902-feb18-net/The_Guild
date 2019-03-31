@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using The_Guild.WebApp.ApiModels;
@@ -21,6 +22,8 @@ namespace The_Guild.WebApp.Controllers
         {
             return View();
         }
+
+        
 
         [HttpPost]
         public async Task<IActionResult> Login(ApiLogin login)
