@@ -9,7 +9,8 @@ namespace The_Guild.WebApp.ApiModels
     public class ApiUsers
     {
         private string _first,
-                       _last;
+                       _last,
+                       _username;
         private decimal? _sal;
         private int? _str,
                      _dex,
@@ -19,6 +20,16 @@ namespace The_Guild.WebApp.ApiModels
                      _con;
 
         public int Id { get; set; }
+
+        public string Username
+        {
+            get => _username;
+            set
+            {
+                Guard.Against.NullOrWhiteSpace(value, nameof(value));
+                _username = value;
+            }
+        }
 
 
         public string FirstName

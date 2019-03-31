@@ -9,7 +9,9 @@ namespace The_Guild.WebApp.Models
     public class Users
     {
         private string _first,
-                       _last;
+                       _last,
+                       _username;
+
         private decimal? _sal;
         private int? _str,
                      _dex,
@@ -19,6 +21,16 @@ namespace The_Guild.WebApp.Models
                      _con;
 
         public int Id { get; set; }
+
+        public string Username
+        {
+            get => _username;
+            set
+            {
+                Guard.Against.NullOrWhiteSpace(value, nameof(value));
+                _username = value;
+            }
+        }
 
         [Required]
         [Display(Name = "First Name")]
