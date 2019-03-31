@@ -2,14 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 using The_Guild.WebApp.ApiModels;
+using The_Guild.WebApp.Models;
 
-namespace The_Guild.WebApp.Models
+namespace The_Guild.WebApp.ViewModel
 {
-    public class Users
+    public class UserViewModel
     {
         private string _first,
-                       _last;
+                      _last;
         private decimal? _sal;
         private int? _str,
                      _dex,
@@ -170,6 +173,28 @@ namespace The_Guild.WebApp.Models
         public int? RankId { get; set; }
         public ApiRanks Rank { get; set; }
         public IEnumerable<ApiRanks> Ranks { get; set; }
+
+        public IEnumerable<Request> submittedRequests { get; set; }
+        public IEnumerable<Request> acceptedRequests { get; set; }
+
+        public UserViewModel() { }
+
+        public UserViewModel(Users user)
+        {
+            Id = user.Id;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            Salary = user.Salary;
+            Strength = user.Strength;
+            Dex = user.Dex;
+            Wisdom = user.Wisdom;
+            Intelligence = user.Intelligence;
+            Charisma = user.Charisma;
+            Constitution = user.Constitution;
+            RankId = user.RankId;
+            Rank = user.Rank;
+            Ranks = user.Ranks;
+        }
 
     }
 }
