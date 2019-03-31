@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create User";
+    var account = ViewData["accountDetails"] as The_Guild.WebApp.ApiModels.ApiAccountDetails;
 }
 <head>
     <title>@ViewData["Title"]</title>
@@ -33,15 +34,25 @@
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Salary" class="control-label"></label>
-                    <input asp-for="Salary" type="number" min="0" max="90000" class="form-control" />
-                    <span asp-validation-for="Salary" class="text-danger"></span>
+                    <label asp-for="Username" class="control-label"></label>
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Strength" class="control-label"></label>
-                    <input asp-for="Strength" type="number" min="0" max="40" class="form-control" />
-                    <span asp-validation-for="Strength" class="text-danger"></span>
-                </div>
+                @if (account?.Roles?.Contains("receptionist") ?? false)
+                {
+                    <div class="form-group">
+                        <label asp-for="Salary" class="control-label"></label>
+                        <input asp-for="Salary" type="number" min="0" max="90000" class="form-control" />
+                        <span asp-validation-for="Salary" class="text-danger"></span>
+                    </div>
+                }
+                @if (account?.Roles?.Contains("adventurer") ?? false)
+                {
+                    <div class="form-group">
+                        <label asp-for="Strength" class="control-label"></label>
+                        <input asp-for="Strength" type="number" min="0" max="40" class="form-control" />
+                        <span asp-validation-for="Strength" class="text-danger"></span>
+                    </div>
                 <div class="form-group">
                     <label asp-for="Dex" class="control-label"></label>
                     <input asp-for="Dex" type="number" min="0" max="40" class="form-control" />
@@ -71,6 +82,7 @@
                     <label asp-for="RankId" class="control-label"></label>
                     <select asp-for="RankId" asp-items="@(new SelectList(Model.Ranks, "Id", "Name"))" class="form-control"></select>
                 </div>
+                }
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>

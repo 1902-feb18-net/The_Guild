@@ -13,29 +13,29 @@ Request Create should automatically add the logged in user? (Already has request
 Request edit view/controller needs authorization checks. 
 Request details should show requesting group and, if accepted or later progress, the adventurer party.
 
-Still need a way to display user's Rank Requirements.
-Still need Users rankup.
 
-Add logic so that cannot update from later progress backwards (can only progress forward), <- added but didn't test
+Still need Users rankup. (added logic and tests. William working on MVC side)
+
+Add logic so that cannot update from later progress backwards (can only progress forward), <- added logic and test
+
 and customer can only update descript/requirements/reward when progress is pending, 
 and receptionist can only update rank when progress is pending, and set progress to declined/approved,
 and adventurer can only update their accepted requests' progress.
-
-Setting/updating request's rank should auto update request's cost! (added but didn't test)
-
-Need logic to prevent adding a rankrequirements if one for the current rank already exists. (added but didn't test)
+Setting/updating request's rank should auto update request's cost! (added logic and tests)
 
 
 Still need Angular GM stuff.
 
-Dockerfile!
+Fix ranks disappearing when there is an error, thereby causing another error (select list's items is null)
 
 
 Non-MVP stuff:
-Sort requests by progress or rank.
+Add more logging. Right now it's only being used in the mapper, which is kinda dumb. 
+Sort requests by progress or rank.  
 Sort users/adventurers by rank.
+Sorting could theoretically be done on only the controller side by sorting the received list by a value already inside it?
 Need to be able to update request's party? 
-
+Displaying a user's rank requirements on their details view? (rank's details currently shows rank rankrequirements, could just add a link to that)
 
 
 Stuff to mention in project presentation:

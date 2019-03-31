@@ -31,7 +31,6 @@ namespace The_Guild.WebApp.ApiModels
             }
         }
 
-
         public string FirstName
         {
             get => _first;
@@ -60,7 +59,7 @@ namespace The_Guild.WebApp.ApiModels
             get => _sal;
             set
             {
-                if (CheckConstraints.ValidDecimal(value,0,900000))
+                if (CheckConstraints.ValidDecimal(value, 0, 900000))
                 {
                     _sal = value;
                 }
@@ -170,7 +169,6 @@ namespace The_Guild.WebApp.ApiModels
                 }
             }
         }
-
         public int? RankId { get; set; }
     }
 }

@@ -4,87 +4,40 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>Register</h1>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link href="~/Styles/User.css" rel="stylesheet" type="text/css" />
+</head>
 
-<h4>ApiRegister</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Register">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
+<body class="user-bg1">
+    <h1 class="user-pad">Register</h1>
+    <div class="row user-pad">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Register">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Username" class="control-label"></label>
+                            <input asp-for="Username" class="form-control" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Salary" class="control-label"></label>
-                <input asp-for="Salary" class="form-control" />
-                <span asp-validation-for="Salary" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Strength" class="control-label"></label>
-                <input asp-for="Strength" class="form-control" />
-                <span asp-validation-for="Strength" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Dex" class="control-label"></label>
-                <input asp-for="Dex" class="form-control" />
-                <span asp-validation-for="Dex" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Wisdom" class="control-label"></label>
-                <input asp-for="Wisdom" class="form-control" />
-                <span asp-validation-for="Wisdom" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Intelligence" class="control-label"></label>
-                <input asp-for="Intelligence" class="form-control" />
-                <span asp-validation-for="Intelligence" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Charisma" class="control-label"></label>
-                <input asp-for="Charisma" class="form-control" />
-                <span asp-validation-for="Charisma" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Constitution" class="control-label"></label>
-                <input asp-for="Constitution" class="form-control" />
-                <span asp-validation-for="Constitution" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RankId" class="control-label"></label>
-                <input asp-for="RankId" class="form-control" />
-                <span asp-validation-for="RankId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</body>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
 
