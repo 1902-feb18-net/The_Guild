@@ -62,7 +62,7 @@ namespace The_Guild.WebApp.Controllers
                     Id = r.Id,
                     Fee = r.Fee,
                     Name = r.Name
-                }).Where(r => r.Id == u.RankId).First()
+                }).First(r => r.Id == u.RankId)
             }).ToList();
 
             
@@ -103,7 +103,23 @@ namespace The_Guild.WebApp.Controllers
             jsonString = await response.Content.ReadAsStringAsync();
             var rank = JsonConvert.DeserializeObject<ApiRanks>(jsonString);
 
+            request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}");
+            response = await HttpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                return View("Error", new ErrorViewModel());
+            }
+
+            jsonString = await response.Content.ReadAsStringAsync();
+            var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
+
             user.Rank = rank;
+            user.Ranks = ranks;
 
             request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Users"]}/{id}/SubmittedRequests");
             response = await HttpClient.SendAsync(request);
