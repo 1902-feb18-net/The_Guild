@@ -161,10 +161,7 @@ namespace The_Guild.WebApp.Controllers
                     {
                         var user = new Users()
                         {
-                            Id = dbRequest.requesters[i].Id,
-                            Username = "dummyVal1",
-                            FirstName = "dummyVal2",
-                            LastName = "dummyVal3",
+                            Id = dbRequest.requesters[i].Id
                         };
                         Request.Requesters.Add(user);
                     }
@@ -208,7 +205,7 @@ namespace The_Guild.WebApp.Controllers
             var progJsonString = await progResponse.Content.ReadAsStringAsync();
             var progresses = JsonConvert.DeserializeObject<List<Progress>>(progJsonString);
             edit.progresses = progresses;
-            
+
             var request2 = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:Ranks"]);
             var response2 = await HttpClient.SendAsync(request2);
             var jsonString2 = await response2.Content.ReadAsStringAsync();
@@ -223,23 +220,15 @@ namespace The_Guild.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, RequestViewModel dbRequest)
         {
-
-            //var tId = dbRequest.Progress.Id;
-            //var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Progress"]}/{tId}" );
-            //var response = await HttpClient.SendAsync(request);
-
-            //var jsonString = await response.Content.ReadAsStringAsync();
-            //var prog = JsonConvert.DeserializeObject<Progress>(jsonString);
-            //dbRequest.Progress.Nam = "1";
-            //dbRequest.Rank.Name = "1";
             try
             {
                 if (!ModelState.IsValid)
                 {
                     return View(dbRequest);
                 }
-                 var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Request"]}/{id}", dbRequest);
-                 var response = await HttpClient.SendAsync(request);
+                var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Request"]}/{id}", dbRequest);
+
+                var response = await HttpClient.SendAsync(request);
 
                 if (!response.IsSuccessStatusCode)
                 {

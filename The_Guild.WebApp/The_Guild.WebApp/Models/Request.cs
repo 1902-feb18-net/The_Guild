@@ -76,7 +76,7 @@ namespace The_Guild.WebApp.Models
         }
 
         [Display(Name = "Progress ID")]
-        public int ProgressId { get; set; }
+        public int? ProgressId { get; set; }
 
         public IEnumerable<AdventureParty> AdventureParty { get; set; }
         public IEnumerable<RequestingGroup> RequestingParty { get; set; }

@@ -114,41 +114,17 @@ namespace The_Guild.WebApp.Controllers
         // POST: /Account/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(ApiUsers users)
+        public async Task<ActionResult> Register(ApiRegister register)
         {
             if (!ModelState.IsValid)
             {
-                return View(users);
+                return View(register);
             }
 
-            ApiRegister reg = new ApiRegister
-            {
-                Username = users.Username,
-                Password = users.Password
-            };
-
-            Users us = new Users
-            {
-                Username = users.Username,
-                FirstName = users.FirstName,
-                LastName = users.LastName,
-                Salary = users.Salary,
-                Strength = users.Strength,
-                Dex = users.Dex,
-                Wisdom = users.Wisdom,
-                Intelligence = users.Intelligence,
-                Charisma = users.Charisma,
-                Constitution = users.Constitution,
-                RankId = 1
-            };
-
             HttpRequestMessage request = CreateRequestToService(HttpMethod.Post,
-                Configuration["ServiceEndpoints:AccountRegister"], reg);
-
-            
+                Configuration["ServiceEndpoints:AccountRegister"], register);
 
             HttpResponseMessage response;
-            HttpResponseMessage response2;
             try
             {
                 response = await HttpClient.SendAsync(request);
@@ -156,50 +132,24 @@ namespace The_Guild.WebApp.Controllers
             catch (HttpRequestException)
             {
                 ModelState.AddModelError("", "Unexpected server error");
-                return View(users);
-            }
-
-            HttpRequestMessage request2 = CreateRequestToService(HttpMethod.Post,
-                Configuration["ServiceEndpoints:Users"], us);
-            try
-            {
-                response2 = await HttpClient.SendAsync(request2);
-            }
-            catch (HttpRequestException)
-            {
-                ModelState.AddModelError("", "Unexpected server error");
-                return View(users);
+                return View(register);
             }
 
             if (!response.IsSuccessStatusCode)
             {
                 ModelState.AddModelError("", "Unexpected server error");
-                return View(users);
-            }
-
-            if (!response2.IsSuccessStatusCode)
-            {
-                ModelState.AddModelError("", "Unexpected server error");
-                return View(users);
+                return View(register);
             }
 
             var success = PassCookiesToClient(response);
             if (!success)
             {
                 ModelState.AddModelError("", "Unexpected server error");
-                return View(users);
+                return View(register);
             }
 
-            ApiLogin log = new ApiLogin
-            {
-                Username = users.Username,
-                Password = users.Password
-            };
-
-            //await Login(log);
-
             // login success
-            return RedirectToAction("Index", "Request");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
