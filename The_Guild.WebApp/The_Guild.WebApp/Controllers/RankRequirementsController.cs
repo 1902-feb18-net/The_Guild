@@ -14,16 +14,17 @@ using The_Guild.WebApp.ViewModel;
 
 namespace The_Guild.WebApp.Controllers
 {
-    public class RanksController : AServiceController
+
+    public class RankRequirementsController : AServiceController
     {
-        public RanksController(HttpClient httpClient, IConfiguration configuration)
-            : base(httpClient, configuration)
+        public RankRequirementsController(HttpClient httpClient, IConfiguration configuration)
+           : base(httpClient, configuration)
         { }
 
-        // GET: Rank
+        // GET: RankRequirements
         public async Task<ActionResult> Index()
         {
-            var request = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:Ranks"]);
+            var request = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:RankRequirements"]);
             var response = await HttpClient.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -36,16 +37,51 @@ namespace The_Guild.WebApp.Controllers
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
+            var requirements = JsonConvert.DeserializeObject<List<RankRequirements>>(jsonString);
+
+            request = CreateRequestToService(HttpMethod.Get, Configuration["ServiceEndpoints:Ranks"]);
+            response = await HttpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                return View("Error", new ErrorViewModel());
+            }
+
+           jsonString = await response.Content.ReadAsStringAsync();
             var ranks = JsonConvert.DeserializeObject<List<Ranks>>(jsonString);
 
-            return View(ranks);
+            var viewModels = requirements.Select(r => new RankRequirementsViewModel
+            {
+                Id = r.Id,
+                CurrentRankId = r.CurrentRankId,
+                MinTotalStats = r.MinTotalStats,
+                NumberRequests = r.NumberRequests,
+                NextRankId = r.NextRankId,
+                CurrentRank = ranks.Select(a => new Ranks
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Fee = a.Fee
+                }).First(x => x.Id == r.CurrentRankId),
+                NextRank = ranks.Select(a => new Ranks
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Fee = a.Fee
+                }).First(x => x.Id == r.NextRankId)
+            }).ToList();
+            
+            return View(viewModels);
         }
 
         // GET: Rank/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}/{id}");
-
+            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:RankRequirements"]}/{id}");
             var response = await HttpClient.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
@@ -58,36 +94,50 @@ namespace The_Guild.WebApp.Controllers
             }
 
             var jsonString = await response.Content.ReadAsStringAsync();
-            Ranks rank = JsonConvert.DeserializeObject<Ranks>(jsonString);
+            RankRequirements requirements = JsonConvert.DeserializeObject<RankRequirements>(jsonString);
 
-            var request2 = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}/{id}/RankRequirements");
-            var response2 = await HttpClient.SendAsync(request2);
-            var jsonString2 = await response2.Content.ReadAsStringAsync();
-            RankRequirements rankReqs = JsonConvert.DeserializeObject<RankRequirements>(jsonString2);
-            RankViewModel viewModel = new RankViewModel(rank, rankReqs);
+            RankRequirementsViewModel viewModel = new RankRequirementsViewModel();
 
             return View(viewModel);
         }
 
         // GET: Rank/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            RankRequirements requirements = new RankRequirements();
+
+            var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}");
+            var response = await HttpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                return View("Error", new ErrorViewModel());
+            }
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+            var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
+
+            requirements.Ranks = ranks;
+            return View(requirements);
         }
 
         // POST: Rank/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Ranks rank)
+        public async Task<ActionResult> Create(RankRequirements requirements)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(rank);
+                    return View(requirements);
                 }
 
-                var request = CreateRequestToService(HttpMethod.Post, Configuration["ServiceEndpoints:Ranks"], rank);
+                var request = CreateRequestToService(HttpMethod.Post, Configuration["ServiceEndpoints:RankRequirements"], requirements);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -105,7 +155,7 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
-                return View(rank);
+                return View(requirements);
             }
         }
 
@@ -118,20 +168,20 @@ namespace The_Guild.WebApp.Controllers
         // POST: Rank/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, Ranks rank)
+        public async Task<ActionResult> Edit(int id, RankRequirements requirements)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(rank);
+                    return View(requirements);
                 }
-                var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Ranks"]}/{id}", rank);
-
+                var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:RankRequirements"]}/{id}", requirements);
                 var response = await HttpClient.SendAsync(request);
 
                 if (!response.IsSuccessStatusCode)
                 {
+                    
                     if (response.StatusCode == HttpStatusCode.Unauthorized)
                     {
                         return RedirectToAction("Login", "Account");
@@ -144,7 +194,7 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
-                return View(rank);
+                return View(requirements);
             }
         }
 
@@ -163,15 +213,15 @@ namespace The_Guild.WebApp.Controllers
         // POST: Rank/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, Ranks rank)
+        public async Task<ActionResult> Delete(int id, RankRequirements requirements)
         {
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    return View(rank);
+                    return View(requirements);
                 }
-                var request = CreateRequestToService(HttpMethod.Delete, $"{Configuration["ServiceEndpoints:Ranks"]}/{id}", rank);
+                var request = CreateRequestToService(HttpMethod.Delete, $"{Configuration["ServiceEndpoints:RankRequirements"]}/{id}", requirements);
 
                 var response = await HttpClient.SendAsync(request);
 
@@ -189,7 +239,7 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
-                return View(rank);
+                return View(requirements);
             }
         }
     }
