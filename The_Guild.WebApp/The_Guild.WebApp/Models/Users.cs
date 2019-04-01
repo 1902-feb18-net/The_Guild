@@ -9,7 +9,9 @@ namespace The_Guild.WebApp.Models
     public class Users
     {
         private string _first,
-                       _last;
+                       _last,
+                       _user;
+      
         private decimal? _sal;
         private int? _str,
                      _dex,
@@ -44,6 +46,17 @@ namespace The_Guild.WebApp.Models
             }
         }
 
+        [Required]
+        [Display(Name = "Username")]
+        public string Username
+        {
+            get => _user;
+            set
+            {
+                Guard.Against.NullOrWhiteSpace(value, nameof(value));
+                _user = value;
+            }
+        }
 
         [Range(0, 900000)]
         public decimal? Salary

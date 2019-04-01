@@ -61,3 +61,15 @@
 .user-center {
     text-align: center;
 }
+
+.table {
+    display: table;
+}
+
+.header-row, row {
+    display: table-row;
+}
+
+.header-cell, cell {
+    display: table-cell;
+}

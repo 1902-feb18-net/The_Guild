@@ -62,7 +62,7 @@ namespace The_Guild.WebApp.Controllers
                     Id = r.Id,
                     Fee = r.Fee,
                     Name = r.Name
-                }).Where(r => r.Id == u.RankId).First()
+                }).First(r => r.Id == u.RankId)
             }).ToList();
 
             
@@ -70,8 +70,12 @@ namespace The_Guild.WebApp.Controllers
         }
 
         // GET: Users/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int? id)
         {
+
+            ApiAccountDetails dets = (ApiAccountDetails)ViewData["accountDetails"];
+            if(id == null)
+                id = dets.UserId;
             var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Users"]}/{id}");
             var response = await HttpClient.SendAsync(request);
 
@@ -103,7 +107,23 @@ namespace The_Guild.WebApp.Controllers
             jsonString = await response.Content.ReadAsStringAsync();
             var rank = JsonConvert.DeserializeObject<ApiRanks>(jsonString);
 
+            request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}");
+            response = await HttpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                return View("Error", new ErrorViewModel());
+            }
+
+            jsonString = await response.Content.ReadAsStringAsync();
+            var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
+
             user.Rank = rank;
+            user.Ranks = ranks;
 
             request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Users"]}/{id}/SubmittedRequests");
             response = await HttpClient.SendAsync(request);
@@ -163,6 +183,7 @@ namespace The_Guild.WebApp.Controllers
 
                 ApiUsers tUser = new ApiUsers
                 {
+                    Username = users.Username,
                     FirstName = users.FirstName,
                     LastName = users.LastName,
                     Salary = users.Salary,

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit User";
+    var account = ViewData["accountDetails"] as The_Guild.WebApp.ApiModels.ApiAccountDetails;
 }
 <head>
     <title>@ViewData["Title"]</title>
@@ -18,6 +19,10 @@
         <div class="col-md-4">
             <form asp-action="Edit" class="user-form">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div>
+                    <input asp-for="Username" type="hidden" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
                 <div class="form-group">
                     <label asp-for="FirstName" class="control-label"></label>
                     <input asp-for="FirstName" class="form-control" />
@@ -28,48 +33,54 @@
                     <input asp-for="LastName" class="form-control" />
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Salary" class="control-label"></label>
-                    <input asp-for="Salary" class="form-control" />
-                    <span asp-validation-for="Salary" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Strength" class="control-label"></label>
-                    <input asp-for="Strength" class="form-control" />
-                    <span asp-validation-for="Strength" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Dex" class="control-label"></label>
-                    <input asp-for="Dex" class="form-control" />
-                    <span asp-validation-for="Dex" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Wisdom" class="control-label"></label>
-                    <input asp-for="Wisdom" class="form-control" />
-                    <span asp-validation-for="Wisdom" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Intelligence" class="control-label"></label>
-                    <input asp-for="Intelligence" class="form-control" />
-                    <span asp-validation-for="Intelligence" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Charisma" class="control-label"></label>
-                    <input asp-for="Charisma" class="form-control" />
-                    <span asp-validation-for="Charisma" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Constitution" class="control-label"></label>
-                    <input asp-for="Constitution" class="form-control" />
-                    <span asp-validation-for="Constitution" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="RankId" class="control-label"></label>
-                    <select asp-for="RankId"asp-items="@(new SelectList(Model.Ranks, "Id", "Name"))" class="form-control"></select>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                </div>
+                @if (account?.Roles?.Contains("receptionist") ?? false)
+                {
+                    <div class="form-group">
+                        <label asp-for="Salary" class="control-label"></label>
+                        <input asp-for="Salary" type="number" min="0" max="90000" class="form-control" />
+                        <span asp-validation-for="Salary" class="text-danger"></span>
+                    </div>
+                }
+                @if (account?.Roles?.Contains("adventurer") ?? false)
+                {
+                    <div class="form-group">
+                        <label asp-for="Strength" class="control-label"></label>
+                        <input asp-for="Strength" type="number" min="0" max="40" class="form-control" />
+                        <span asp-validation-for="Strength" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Dex" class="control-label"></label>
+                        <input asp-for="Dex" type="number" min="0" max="40" class="form-control" />
+                        <span asp-validation-for="Dex" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Wisdom" class="control-label"></label>
+                        <input asp-for="Wisdom" type="number" min="0" max="40" class="form-control" />
+                        <span asp-validation-for="Wisdom" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Intelligence" class="control-label"></label>
+                        <input asp-for="Intelligence" type="number" min="0" max="40" class="form-control" />
+                        <span asp-validation-for="Intelligence" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Charisma" class="control-label"></label>
+                        <input asp-for="Charisma" type="number" min="0" max="40" class="form-control" />
+                        <span asp-validation-for="Charisma" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Constitution" class="control-label"></label>
+                        <input asp-for="Constitution" type="number" min="0" max="40" class="form-control" />
+                        <span asp-validation-for="Constitution" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RankId" class="control-label"></label>
+                        <select asp-for="RankId" asp-items="@(new SelectList(Model.Ranks, "Id", "Name"))" class="form-control"></select>
+                    </div>
+                }
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
             </form>
         </div>
     </div>
