@@ -71,6 +71,8 @@ namespace The_Guild.WebApp.ViewModel
             }
         }
 
+        public int RankId { get; set; }
+        public int ProgressId { get; set; }
 
         [Display(Name = "Rank")]
         public Ranks Rank { get; set; } //to display rank name

@@ -39,6 +39,5 @@ namespace The_Guild.Test.ApiModelTests
             Assert.Throws<ArgumentNullException>(() => _login.Password = null);
         }
 
-        
     }
 }
