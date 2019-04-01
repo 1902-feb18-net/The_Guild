@@ -18,6 +18,7 @@ namespace The_Guild.WebApp.ApiModels
                      _int,
                      _cha,
                      _con;
+        private string _errorMsg = "Number out of range!";
 
         public int Id { get; set; }
 
@@ -65,7 +66,7 @@ namespace The_Guild.WebApp.ApiModels
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }
@@ -82,7 +83,7 @@ namespace The_Guild.WebApp.ApiModels
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }
@@ -98,7 +99,7 @@ namespace The_Guild.WebApp.ApiModels
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }
@@ -131,7 +132,7 @@ namespace The_Guild.WebApp.ApiModels
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }
@@ -148,7 +149,7 @@ namespace The_Guild.WebApp.ApiModels
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }
@@ -165,7 +166,7 @@ namespace The_Guild.WebApp.ApiModels
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }

@@ -1,0 +1,49 @@
+﻿@model The_Guild.WebApp.Models.RankRequirements
+
+@{
+    ViewData["Title"] = "Create Rank Requirements";
+}
+<head>
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Styles/User.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="user-bg1">
+    <h1 class="user-default user-pad">Create</h1>
+    <div class="user-default user-pad">
+        <a asp-action="Index" class="user-button">Back to List</a>
+    </div>
+    <div class="user-create">
+        <div class="col-md-4">
+            <form asp-action="Create" class="user-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="CurrentRankId" class="control-label"></label>
+                    <select asp-for="CurrentRankId" asp-items="@(new SelectList(Model.Ranks, "Id", "Name"))" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NumberRequests" class="control-label"></label>
+                    <input asp-for="NumberRequests" class="form-control" />
+                    <span asp-validation-for="NumberRequests" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MinTotalStats" class="control-label"></label>
+                    <input asp-for="MinTotalStats" class="form-control" />
+                    <span asp-validation-for="MinTotalStats" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NextRankId" class="control-label"></label>
+                    <select asp-for="NextRankId" asp-items="@(new SelectList(Model.Ranks, "Id", "Name"))" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
