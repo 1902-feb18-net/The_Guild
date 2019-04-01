@@ -90,22 +90,7 @@ namespace The_Guild.WebApp.Controllers
 
             var jsonString = await response.Content.ReadAsStringAsync();
             Users user = JsonConvert.DeserializeObject<Users>(jsonString);
-            var rId = user.RankId;
-
-            request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}/{rId}");
-            response = await HttpClient.SendAsync(request);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                if (response.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    return RedirectToAction("Login", "Account");
-                }
-                return View("Error", new ErrorViewModel());
-            }
-
-            jsonString = await response.Content.ReadAsStringAsync();
-            var rank = JsonConvert.DeserializeObject<ApiRanks>(jsonString);
+            
 
             request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}");
             response = await HttpClient.SendAsync(request);
@@ -122,7 +107,7 @@ namespace The_Guild.WebApp.Controllers
             jsonString = await response.Content.ReadAsStringAsync();
             var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
 
-            user.Rank = rank;
+            user.Rank = ranks.First(r => r.Id == user.RankId);
             user.Ranks = ranks;
 
             request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Users"]}/{id}/SubmittedRequests");
@@ -301,12 +286,49 @@ namespace The_Guild.WebApp.Controllers
                     ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
                     return View(users);
                 }
-                request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Users"]}/{id}", users);
-
-                response = await HttpClient.SendAsync(request);
+                var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Users"]}/{id}", users);
+                var response = await HttpClient.SendAsync(request);
 
                 if (!response.IsSuccessStatusCode)
                 {
+                    if (response.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        ModelState.AddModelError("", "You Don't Meet Requirements For Rank Up! ");
+
+                        var rId = users.RankId;
+                        request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}/{rId}");
+                        response = await HttpClient.SendAsync(request);
+
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            if (response.StatusCode == HttpStatusCode.Unauthorized)
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+                            return View("Error", new ErrorViewModel());
+                        }
+
+                        var jsonString = await response.Content.ReadAsStringAsync();
+                        ApiRanks rank = JsonConvert.DeserializeObject<ApiRanks>(jsonString);
+
+                        request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}");
+                        response = await HttpClient.SendAsync(request);
+
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            if (response.StatusCode == HttpStatusCode.Unauthorized)
+                            {
+                                return RedirectToAction("Login", "Account");
+                            }
+                            return View("Error", new ErrorViewModel());
+                        }
+
+                        jsonString = await response.Content.ReadAsStringAsync();
+                        var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
+                        users.Rank = rank;
+                        users.Ranks = ranks;
+                        return View(users);
+                    }
                     if (response.StatusCode == HttpStatusCode.Unauthorized)
                     {
                         return RedirectToAction("Login", "Account");
@@ -319,8 +341,8 @@ namespace The_Guild.WebApp.Controllers
             catch
             {
                 // log it
-
-                var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}");
+                var rId = users.RankId;
+                var request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}/{rId}");
                 var response = await HttpClient.SendAsync(request);
 
                 if (!response.IsSuccessStatusCode)
@@ -333,12 +355,29 @@ namespace The_Guild.WebApp.Controllers
                 }
 
                 var jsonString = await response.Content.ReadAsStringAsync();
-                var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
+                ApiRanks rank = JsonConvert.DeserializeObject<ApiRanks>(jsonString);
 
+                request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}");
+                response = await HttpClient.SendAsync(request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return RedirectToAction("Login", "Account");
+                    }
+                    return View("Error", new ErrorViewModel());
+                }
+
+                jsonString = await response.Content.ReadAsStringAsync();
+                var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
+                users.Rank = rank;
+                users.Ranks = ranks;
                 return View(users);
             }
         }
 
+      
         // GET: Users/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
