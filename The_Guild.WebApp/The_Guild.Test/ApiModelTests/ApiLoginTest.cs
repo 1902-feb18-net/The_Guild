@@ -39,13 +39,6 @@ namespace The_Guild.Test.ApiModelTests
             Assert.Throws<ArgumentNullException>(() => _login.Password = null);
         }
 
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void Test_RememberMe(bool arg)
-        {
-            _login.RememberMe = arg;
-            Assert.Equal(arg, _login.RememberMe);
-        }
+        
     }
 }
