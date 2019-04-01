@@ -161,7 +161,10 @@ namespace The_Guild.WebApp.Controllers
                     {
                         var user = new Users()
                         {
-                            Id = dbRequest.requesters[i].Id
+                            Id = dbRequest.requesters[i].Id,
+                            Username = "dummyVal1",
+                            FirstName = "dummyVal2",
+                            LastName = "dummyVal3",
                         };
                         Request.Requesters.Add(user);
                     }
