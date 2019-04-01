@@ -210,7 +210,7 @@ namespace The_Guild.WebApp.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 // log it
                 return View(users);
