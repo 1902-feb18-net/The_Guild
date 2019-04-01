@@ -19,7 +19,7 @@ namespace The_Guild.WebApp.Models
                      _int,
                      _cha,
                      _con;
-
+        private string _errorMsg = "Number out of Range!";
         public int Id { get; set; }
 
         [Required]
@@ -70,7 +70,7 @@ namespace The_Guild.WebApp.Models
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace The_Guild.WebApp.Models
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }
@@ -105,7 +105,7 @@ namespace The_Guild.WebApp.Models
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }
@@ -122,7 +122,7 @@ namespace The_Guild.WebApp.Models
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace The_Guild.WebApp.Models
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }
@@ -156,7 +156,7 @@ namespace The_Guild.WebApp.Models
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }
@@ -173,7 +173,7 @@ namespace The_Guild.WebApp.Models
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(_errorMsg);
                 }
             }
         }
