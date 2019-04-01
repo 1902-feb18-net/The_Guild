@@ -277,8 +277,8 @@ namespace The_Guild.WebApp.Controllers
                     ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
                     return View(users);
                 }
-                var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Users"]}/{id}", users);
-                var response = await HttpClient.SendAsync(request);
+                 request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Users"]}/{id}", users);
+                 response = await HttpClient.SendAsync(request);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -298,7 +298,7 @@ namespace The_Guild.WebApp.Controllers
                             return View("Error", new ErrorViewModel());
                         }
 
-                        var jsonString = await response.Content.ReadAsStringAsync();
+                         jsonString = await response.Content.ReadAsStringAsync();
                         ApiRanks rank = JsonConvert.DeserializeObject<ApiRanks>(jsonString);
 
                         response = await GetResponse($"{Configuration["ServiceEndpoints:Ranks"]}");
@@ -313,7 +313,7 @@ namespace The_Guild.WebApp.Controllers
                         }
 
                         jsonString = await response.Content.ReadAsStringAsync();
-                        var ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
+                        ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
                         users.Rank = rank;
                         users.Ranks = ranks;
                         return View(users);
