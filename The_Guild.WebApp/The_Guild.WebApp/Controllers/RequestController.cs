@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using The_Guild.WebApp.ApiModels;
 using The_Guild.WebApp.Models;
 using The_Guild.WebApp.ViewModel;
 
@@ -302,70 +301,6 @@ namespace The_Guild.WebApp.Controllers
             {
                 // log it
                 return View(dbRequest);
-            }
-        }
-
-        public async Task<ActionResult> AddAdvToRequest(int id)
-        {
-            ApiAccountDetails dets = (ApiAccountDetails)ViewData["accountDetails"];
-            int userId = dets.UserId;
-            var userRequest = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Users"]}/{userId}");
-            var userResponse = await HttpClient.SendAsync(userRequest);
-            var jsonString = await userResponse.Content.ReadAsStringAsync();
-            var user = JsonConvert.DeserializeObject<Users>(jsonString);
-            
-
-            var questRequest = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Request"]}/{id}");
-            var questResponse = await HttpClient.SendAsync(questRequest);
-            var jsonString2 = await questResponse.Content.ReadAsStringAsync();
-            var req = JsonConvert.DeserializeObject<Request>(jsonString2);
-
-            QuesterViewModel quest = new QuesterViewModel
-            {
-                Username = user.Username,
-                Quest = req.Descript,
-                request = req
-            };
-            return View(quest);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> SendAdvToRequest(Request req)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(req);
-            }
-            ApiAccountDetails dets = (ApiAccountDetails)ViewData["accountDetails"];
-            int userId = dets.UserId;
-
-            AdventureParty party = new AdventureParty
-            {
-                AdventurerId = userId,
-                RequestId = req.Id,
-                Name = $"Party{userId+req.Id}"
-            };
-            try
-            {
-                var request = CreateRequestToService(HttpMethod.Post, $"{Configuration["ServiceEndpoints:Request"]}/{req.Id}", party);
-
-                var response = await HttpClient.SendAsync(request);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    if (response.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        return RedirectToAction("Login", "Account");
-                    }
-                    return View("Error", new ErrorViewModel());
-                }
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                // log it
-                return View(req);
             }
         }
     }
