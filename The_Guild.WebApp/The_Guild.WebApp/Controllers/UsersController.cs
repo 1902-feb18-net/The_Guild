@@ -69,8 +69,13 @@ namespace The_Guild.WebApp.Controllers
         }
 
         // GET: Users/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int? id)
         {
+
+            ApiAccountDetails dets = (ApiAccountDetails)ViewData["accountDetails"];
+            if(id == null)
+                id = dets.UserId;
+
 
             var response = await GetResponse($"{Configuration["ServiceEndpoints:Users"]}/{id}");
             if (!response.IsSuccessStatusCode)
@@ -184,7 +189,7 @@ namespace The_Guild.WebApp.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 // log it
                 return View(users);
@@ -249,8 +254,27 @@ namespace The_Guild.WebApp.Controllers
         {
             try
             {
+                HttpRequestMessage request;
+                HttpResponseMessage response;
+                string jsonString;
+                List<ApiRanks> ranks;
+
                 if (!ModelState.IsValid)
                 {
+                    request = CreateRequestToService(HttpMethod.Get, $"{Configuration["ServiceEndpoints:Ranks"]}");
+                    response = await HttpClient.SendAsync(request);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        if (response.StatusCode == HttpStatusCode.Unauthorized)
+                        {
+                            return RedirectToAction("Login", "Account");
+                        }
+                        return View("Error", new ErrorViewModel());
+                    }
+
+                    jsonString = await response.Content.ReadAsStringAsync();
+                    ranks = JsonConvert.DeserializeObject<List<ApiRanks>>(jsonString);
                     return View(users);
                 }
                 var request = CreateRequestToService(HttpMethod.Put, $"{Configuration["ServiceEndpoints:Users"]}/{id}", users);
