@@ -109,7 +109,10 @@
                         {
                             @:| @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                             @:| @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-
+                        }
+                        @if (account?.Roles?.Contains("adventurer") ?? false)
+                        {
+                            @:| @Html.ActionLink("Join Quest", "AddAdvToRequest", new { id = item.Id })
                         }
                     </td>
             </tr>
