@@ -312,13 +312,14 @@ namespace The_Guild.WebApp.Controllers
             QuesterViewModel quest = new QuesterViewModel
             {
                 Username = user.Username,
-                Quest = req.Descript
+                Quest = req.Descript,
+                request = req
             };
             return View(quest);
         }
 
         [HttpPost]
-        public async Task<ActionResult> SendAdvToRequest(int id, Request req)
+        public async Task<ActionResult> SendAdvToRequest(Request req)
         {
             if (!ModelState.IsValid)
             {
@@ -330,12 +331,12 @@ namespace The_Guild.WebApp.Controllers
             AdventureParty party = new AdventureParty
             {
                 AdventurerId = userId,
-                RequestId = id,
-                Name = $"Party{userId+id}"
+                RequestId = req.Id,
+                Name = $"Party{userId+req.Id}"
             };
             try
             {
-                var request = CreateRequestToService(HttpMethod.Post, $"{Configuration["ServiceEndpoints:RequestAdd"]}/{id}", party);
+                var request = CreateRequestToService(HttpMethod.Post, $"{Configuration["ServiceEndpoints:Request"]}/{req.Id}", party);
 
                 var response = await HttpClient.SendAsync(request);
 

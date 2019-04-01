@@ -16,5 +16,7 @@ namespace The_Guild.WebApp.ViewModel
         [Display(Name ="Username")]
         public string Username { get; set; }
 
+        public Request request { get; set; }
+
     }
 }
