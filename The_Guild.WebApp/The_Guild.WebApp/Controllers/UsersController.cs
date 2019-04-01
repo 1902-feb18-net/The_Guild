@@ -186,7 +186,6 @@ namespace The_Guild.WebApp.Controllers
                     Username = users.Username,
                     FirstName = users.FirstName,
                     LastName = users.LastName,
-                    UserName = users.Username,
                     Salary = users.Salary,
                     Strength = users.Strength,
                     Dex = users.Dex,

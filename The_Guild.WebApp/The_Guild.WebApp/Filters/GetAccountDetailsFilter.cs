@@ -59,7 +59,7 @@ namespace The_Guild.WebApp.Filters
                         List<ApiUsers> users = JsonConvert.DeserializeObject<List<ApiUsers>>(jsonString2);
                         foreach(ApiUsers user in users)
                         {
-                            if(user.UserName == details.Username)
+                            if(user.Username == details.Username)
                             {
                                 details.UserId = user.Id;
                             }

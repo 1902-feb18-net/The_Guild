@@ -11,7 +11,6 @@ namespace The_Guild.WebApp.ApiModels
     {
         private string _userName;
         private string _password;
-        private bool _remember;
 
         public string Username {
             get => _userName;
@@ -30,13 +29,6 @@ namespace The_Guild.WebApp.ApiModels
             {
                 Guard.Against.NullOrWhiteSpace(value, nameof(value));
                 _password = value;
-            }
-        }
-        public bool RememberMe {
-            get => _remember;
-            set
-            {
-                _remember = value;
             }
         }
     }
